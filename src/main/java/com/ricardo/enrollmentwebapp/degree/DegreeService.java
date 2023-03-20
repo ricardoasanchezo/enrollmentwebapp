@@ -1,4 +1,4 @@
-package com.example.demo.degree;
+package com.ricardo.enrollmentwebapp.degree;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

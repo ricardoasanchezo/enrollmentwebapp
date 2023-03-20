@@ -1,4 +1,4 @@
-package com.ricardo.enrollmentwebapp.degree;
+package com.ricardo.enrollmentwebapp.department;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,11 +12,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tbl_degrees")
-public class Degree
+@Table(name = "tbl_departments")
+public class Department
 {
     @Id
-    @Column(length = 10)
+    @Column(length = 6)
     private String code;
+    private int number;
     private String name;
 }

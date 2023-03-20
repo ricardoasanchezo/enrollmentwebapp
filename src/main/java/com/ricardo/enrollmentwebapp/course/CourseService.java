@@ -1,4 +1,4 @@
-package com.example.demo.course;
+package com.ricardo.enrollmentwebapp.course;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

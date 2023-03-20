@@ -1,4 +1,4 @@
-package com.example.demo.course;
+package com.ricardo.enrollmentwebapp.course;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

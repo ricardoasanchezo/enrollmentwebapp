@@ -1,25 +1,30 @@
-package com.example.demo.course;
+package com.ricardo.enrollmentwebapp.course;
 
+import com.ricardo.enrollmentwebapp.department.Department;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tbl_course")
+@Table(name = "tbl_courses")
 public class Course
 {
     @Id
-    @Column(length = 12)
+    @Column(length = 10)
     private String code;
-    @Column(length = 6)
-    private String subject;
-    @Column(length = 6)
-    private String number;
     private String title;
     private int creditCount;
-    private int deptNumber;
+//    @ManyToMany
+//    private Set<Course> prerequisites;
+//    @ManyToMany
+//    private Set<Course> corequisites;
+    @ManyToOne
+    private Department department; // Many courses have one and only one department
 }

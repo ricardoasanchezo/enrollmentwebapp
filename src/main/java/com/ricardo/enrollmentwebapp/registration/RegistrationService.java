@@ -6,6 +6,8 @@ import com.ricardo.enrollmentwebapp.appuser.AppUserRole;
 import com.ricardo.enrollmentwebapp.appuser.AppUserService;
 import com.ricardo.enrollmentwebapp.registration.token.ConfirmationToken;
 import com.ricardo.enrollmentwebapp.registration.token.ConfirmationTokenService;
+import com.ricardo.enrollmentwebapp.student.Student;
+import com.ricardo.enrollmentwebapp.student.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,28 +23,37 @@ public class RegistrationService
 {
     private final AppUserService appUserService;
     private final ConfirmationTokenService confirmationTokenService;
+    private final StudentService studentService;
 
     /**
-     * Receives the registration request from the RegistrationController, signs up the user through the
-     * AppUserService and returns the token to confirm user account if the registration was successful.
+     * Receives the registration request from the RegistrationController, verifies that the user has
+     * a matching student entry in the database and signs up the user through the AppUserService and
+     * returns the token to confirm user account if the registration was successful.
      * @param request The request received from the RegistrationController.
      * @return The token for that user to confirm their account.
      */
     public String register(RegistrationRequest request)
     {
-        String studentId = request.getStudentId();
-
+        String studentId = request.getUsername();
         if (!InputValidator.matchesRegex(studentId, InputValidator.STUDENT_ID_REGEX))
             return "Student ID invalid!";
 
-        return appUserService.SignUpUser(
+        Student student = studentService.findStudentById(studentId).orElse(null);
+        if (student == null)
+            return "There was no student found in database with id: " + studentId;
+
+        String token = appUserService.signUpUser(
                 new AppUser(
-                    request.getStudentId(),
-                    request.getPassword(),
-                    AppUserRole.USER,
-                    false
+                        request.getUsername(),
+                        request.getPassword(),
+                        AppUserRole.USER,
+                        false
                 )
         );
+
+        // TODO: send email with verification link
+
+        return token + ", " + student.getEmail();
     }
 
     /**

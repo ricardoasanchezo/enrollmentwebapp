@@ -37,7 +37,7 @@ public class AppUserService implements UserDetailsService
      * @return The token the user needs to confirm for their account validation,
      * or a warning if the user already exists.
      */
-    public String SignUpUser(AppUser appUser)
+    public String signUpUser(AppUser appUser)
     {
         boolean userExists = appUserRepository.findByUsername(appUser.getUsername()).isPresent();
         if (userExists) return "User " + appUser.getUsername() + " already exists!";

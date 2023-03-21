@@ -10,31 +10,31 @@ import java.util.List;
 public class CourseService
 {
     @Autowired
-    CourseRepository repository;
+    CourseRepository courseRepository;
 
     public Course saveCourse(Course course)
     {
-        return repository.save(course);
+        return courseRepository.save(course);
     }
 
     public List<Course> saveCourses(List<Course> courses)
     {
-        return repository.saveAll(courses);
+        return courseRepository.saveAll(courses);
     }
 
     public List<Course> getAllCourses()
     {
-        return repository.findAll();
+        return courseRepository.findAll();
     }
 
     public Course getCourseByCode(String code)
     {
-        return repository.findById(code).orElse(null);
+        return courseRepository.findById(code).orElse(null);
     }
 
     public String deleteCourseByCode(String code)
     {
-        repository.deleteById(code);
+        courseRepository.deleteById(code);
         return "Course with code: " + code + " deleted!";
     }
 }

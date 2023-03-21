@@ -8,6 +8,6 @@ import lombok.*;
 @ToString
 public class RegistrationRequest
 {
-    private final String studentId;
+    private final String username;
     private final String password;
 }

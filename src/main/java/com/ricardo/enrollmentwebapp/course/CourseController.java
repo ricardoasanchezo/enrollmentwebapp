@@ -10,35 +10,35 @@ import java.util.List;
 public class CourseController
 {
     @Autowired
-    CourseService service;
+    CourseService courseService;
 
     @PostMapping("/save")
     public Course saveCourse(@RequestBody Course course)
     {
-        return service.saveCourse(course);
+        return courseService.saveCourse(course);
     }
 
     @PostMapping("/saveAll")
     public List<Course> saveCourses(@RequestBody List<Course> courses)
     {
-        return service.saveCourses(courses);
+        return courseService.saveCourses(courses);
     }
 
     @GetMapping("/getAll")
     public List<Course> getAllCourses()
     {
-        return service.getAllCourses();
+        return courseService.getAllCourses();
     }
 
     @GetMapping("/get/{code}")
     public Course getCourseByCode(@PathVariable String code)
     {
-        return service.getCourseByCode(code);
+        return courseService.getCourseByCode(code);
     }
 
     @DeleteMapping("/delete/{code}")
     public String deleteCourseByCode(@PathVariable String code)
     {
-        return service.deleteCourseByCode(code);
+        return courseService.deleteCourseByCode(code);
     }
 }

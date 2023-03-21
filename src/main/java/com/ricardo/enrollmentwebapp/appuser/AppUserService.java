@@ -30,6 +30,13 @@ public class AppUserService implements UserDetailsService
                 new UsernameNotFoundException("Username " + username + " not found!"));
     }
 
+    /**
+     * Signs up a new user to the web application. Saves username and password, and creates a token for their
+     * account confirmation.
+     * @param appUser The app user to sign up, received from the request made by the RegistrationService class.
+     * @return The token the user needs to confirm for their account validation,
+     * or a warning if the user already exists.
+     */
     public String SignUpUser(AppUser appUser)
     {
         boolean userExists = appUserRepository.findByUsername(appUser.getUsername()).isPresent();
@@ -48,7 +55,7 @@ public class AppUserService implements UserDetailsService
             appUser
         );
 
-        confirmationTokenService.SaveConfirmationToken(confirmationToken);
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
 
         return token;
     }
@@ -58,7 +65,12 @@ public class AppUserService implements UserDetailsService
         return new BCryptPasswordEncoder();
     }
 
-    public void enableAppUser(String username)
+    /**
+     * Enables the user that matches the received username through the AppUserRepository.
+     * @param username The username of the user to enable.
+     */
+    public int enableAppUser(String username)
     {
+        return appUserRepository.enableAppUser(username);
     }
 }

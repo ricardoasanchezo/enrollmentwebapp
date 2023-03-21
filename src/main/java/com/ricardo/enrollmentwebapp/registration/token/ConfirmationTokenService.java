@@ -14,7 +14,7 @@ public class ConfirmationTokenService
     @Autowired
     private final ConfirmationTokenRepository confirmationTokenRepository;
 
-    public void SaveConfirmationToken(ConfirmationToken token)
+    public void saveConfirmationToken(ConfirmationToken token)
     {
         confirmationTokenRepository.save(token);
     }
@@ -24,6 +24,11 @@ public class ConfirmationTokenService
         return confirmationTokenRepository.findByToken(token);
     }
 
+    /**
+     * Confirms the token received from the RegistrationService once it has been validated.
+     * @param token The token to be confirmed.
+     * @return idk honestly.
+     */
     public int setConfirmedAt(String token) {
         return confirmationTokenRepository.updateConfirmedAt(token, LocalDateTime.now());
     }

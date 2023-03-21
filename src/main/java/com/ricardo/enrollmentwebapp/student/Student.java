@@ -1,14 +1,10 @@
 package com.ricardo.enrollmentwebapp.student;
 
-
-import com.ricardo.enrollmentwebapp.course.Course;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Set;
 
 @Getter
 @Setter

@@ -71,13 +71,14 @@ public class AppUserService implements UserDetailsService
 
         confirmationTokenService.saveConfirmationToken(confirmationToken);
 
-        // TODO: send email with verification link
-        String link = "localhost:8080/register/confirm?token=" + token;
+        // Send email with verification link
+        String link = "http://localhost:8080/register/confirm?token=" + token;
         String emailText = buildEmail(student.getStudentId(), link);
 
-        // emailService.send(student.getEmail(), emailText);
+        emailService.send(student.getEmail(), emailText);
 
-        return link;
+        // return link;
+        return "email was sent to " + student.getEmail();
     }
 
     public PasswordEncoder passwordEncoder()

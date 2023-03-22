@@ -23,7 +23,6 @@ public class AppUserService implements UserDetailsService
 {
     @Autowired
     private final AppUserRepository appUserRepository;
-    // @Autowired
     private final ConfirmationTokenService confirmationTokenService;
     private final StudentService studentService;
     private final EmailService emailService;
@@ -39,26 +38,54 @@ public class AppUserService implements UserDetailsService
     /**
      * Verifies that the user has a matching student entry in the database, signs them up,
      * creates a token for account verification and send email with verification link.
-     * @param appUser The app user to sign up, received from the request made by the RegistrationService class.
+     * @param newAppUser The app user to sign up, received from the request made by the RegistrationService class.
      * @return The token the user needs to confirm for their account validation,
      * or a warning if the user already exists.
      */
-    public String signUpUser(AppUser appUser)
+    public String signUpUser(AppUser newAppUser)
     {
-        // Check if the user exists
-        boolean userExists = appUserRepository.findByUsername(appUser.getUsername()).isPresent();
-        if (userExists)
-            return "User " + appUser.getUsername() + " already exists!";
-
-        // Check if the username ahs a matching Student in the database
-        Student student = studentService.findStudentById(appUser.getUsername()).orElse(null);
+        // Check if the username has a matching Student in the database
+        Student student = studentService.findStudentById(newAppUser.getUsername()).orElse(null);
         if (student == null)
-            return "There was no student found in database with id: " + appUser.getUsername();
+        {
+            return "There was no student found in database with id: " + newAppUser.getUsername();
+        }
+
+        // Check if the user exists
+//        boolean userExists = appUserRepository.findByUsername(newAppUser.getUsername()).isPresent();
+//        if (userExists)
+//        {
+//
+//            return "User " + newAppUser.getUsername() + " already exists!";
+//        }
+
+        AppUser existingAppUser = appUserRepository.findByUsername(newAppUser.getUsername()).orElse(null);
+        if (existingAppUser != null)
+        {
+            if (existingAppUser.isEnabled())
+            {
+                return "User " + existingAppUser.getUsername() + " has already been enabled!";
+            }
+            else
+            {
+                // Create and save new token for account verification
+                String token = UUID.randomUUID().toString();
+                ConfirmationToken confirmationToken = new ConfirmationToken(
+                        token,
+                        LocalDateTime.now(),
+                        LocalDateTime.now().plusMinutes(15),
+                        existingAppUser
+                );
+                confirmationTokenService.saveConfirmationToken(confirmationToken);
+
+                return sendEmailToUser(student, token);
+            }
+        }
 
         // Save user in database
-        String encodedPassword = passwordEncoder().encode(appUser.getPassword());
-        appUser.setPassword(encodedPassword);
-        appUserRepository.save(appUser);
+        String encodedPassword = passwordEncoder().encode(newAppUser.getPassword());
+        newAppUser.setPassword(encodedPassword);
+        appUserRepository.save(newAppUser);
 
         // Create and save token for account verification
         String token = UUID.randomUUID().toString();
@@ -66,19 +93,21 @@ public class AppUserService implements UserDetailsService
             token,
             LocalDateTime.now(),
             LocalDateTime.now().plusMinutes(15),
-            appUser
+            newAppUser
         );
-
         confirmationTokenService.saveConfirmationToken(confirmationToken);
 
-        // Send email with verification link
+        return sendEmailToUser(student, token);
+    }
+
+    public String sendEmailToUser(Student student, String token)
+    {
         String link = "http://localhost:8080/register/confirm?token=" + token;
         String emailText = buildEmail(student.getStudentId(), link);
 
         emailService.send(student.getEmail(), emailText);
 
-        // return link;
-        return "email was sent to " + student.getEmail();
+        return "Email was sent to " + student.getEmail();
     }
 
     public PasswordEncoder passwordEncoder()

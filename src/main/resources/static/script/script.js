@@ -1,59 +1,42 @@
-async function login()
-{
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-
-    let request = {
-        username: username,
-        password: password
-    }
-
-    try
-    {
-        const response =
-            await fetch
-            (
-                "http://localhost:8080/auth/authenticate",
-                {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json",},
-                    body: JSON.stringify(request),
-                }
-            );
-
-        const result = await response.json();
-        console.log("Success:", result);
-    }
-    catch (error)
-    {
-        console.error("Error:", error);
-    }
-}
-
 function validateRegisterForm()
 {
-    const username = document.getElementById("username").value;
-    const studentIdRegex = /^[a-zA-Z][0-9]{8}$/;
+    let username = getUsername();
+    if (username.length === 0)
+        return alert("Invalid Student ID format!");
 
-    if (!matchesRegex(username, studentIdRegex))
-    {
-        alert("Invalid Student ID format!");
-        return false;
-    }
+    let password = getPassword()
+    if (password.length === 0)
+        return alert("Password needs to be between " + 8 + " and " + 20 + " characters long!");
 
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
-
-    if (password !== confirmPassword)
-    {
-        alert("Passwords do not match!");
-        return false;
-    }
+    if (!passwordsMatch(password))
+        return alert("Passwords do not match!");
 
     register(username, password).then(()=>
     {
-        alert("register successful")
+        alert("register successful");
     });
+}
+
+function getUsername()
+{
+    let username = document.getElementById("username").value;
+    const STUDENT_ID_REGEX = /^[a-zA-Z][0-9]{8}$/;
+
+    return matchesRegex(username, STUDENT_ID_REGEX) ? username : "";
+}
+
+function getPassword()
+{
+    let password = document.getElementById("password").value;
+    const PASSWORD_REGEX = /^.{8,20}$/;
+
+    return matchesRegex(password, PASSWORD_REGEX) ? password : "";
+}
+
+function passwordsMatch(password)
+{
+    let confirmPassword = document.getElementById("confirmPassword").value;
+    return password === confirmPassword;
 }
 
 async function register(username, password)
@@ -64,8 +47,7 @@ async function register(username, password)
     }
 
     try {
-        const response =
-            await fetch
+        const response = await fetch
             (
                 "http://localhost:8080/auth/register",
                 {

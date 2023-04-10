@@ -5,10 +5,12 @@ import com.ricardo.enrollmentwebapp.security.auth.confirmationtoken.Confirmation
 import com.ricardo.enrollmentwebapp.security.auth.confirmationtoken.ConfirmationTokenService;
 import com.ricardo.enrollmentwebapp.entities.student.Student;
 import com.ricardo.enrollmentwebapp.entities.student.StudentService;
+import com.ricardo.enrollmentwebapp.security.auth.registration.RegistrationRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,6 +25,7 @@ public class MyUserService implements UserDetailsService
     private final ConfirmationTokenService confirmationTokenService;
     private final StudentService studentService;
     private final EmailService emailService;
+    private final PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -35,20 +38,20 @@ public class MyUserService implements UserDetailsService
     /**
      * Verifies that the user has a matching student entry in the database, signs them up,
      * creates a token for account verification and send email with verification link.
-     * @param newMyUser The app user to sign up, received from the request made by the RegistrationService class.
+     * @param request The app user to sign up, received from the request made by the RegistrationService class.
      * @return The token the user needs to confirm for their account validation,
      * or a warning if the user already exists.
      */
-    public String signUpUser(MyUser newMyUser) throws Exception
+    public String signUpUser(RegistrationRequest request) throws Exception
     {
         // Check if the username has a matching Student in the database
-        Student student = studentService.findStudentById(newMyUser.getUsername());
+        Student student = studentService.findStudentById(request.getUsername());
         if (student == null)
         {
-            return "There was no student found in database with id: " + newMyUser.getUsername();
+            return "There was no student found in database with id: " + request.getUsername();
         }
 
-        MyUser existingMyUser = myUserRepository.findByUsername(newMyUser.getUsername()).orElse(null);
+        MyUser existingMyUser = myUserRepository.findByUsername(request.getUsername()).orElse(null);
         if (existingMyUser != null)
         {
             if (existingMyUser.isEnabled())
@@ -71,8 +74,15 @@ public class MyUserService implements UserDetailsService
             }
         }
 
+        MyUser newUser = new MyUser(
+                request.getUsername(),
+                passwordEncoder.encode(request.getPassword()),
+                Role.USER,
+                false
+        );
+
         // Save user in database
-        myUserRepository.save(newMyUser);
+        myUserRepository.save(newUser);
 
         // Create and save token for account verification
         String token = UUID.randomUUID().toString();
@@ -80,8 +90,9 @@ public class MyUserService implements UserDetailsService
             token,
             LocalDateTime.now(),
             LocalDateTime.now().plusMinutes(15),
-                newMyUser
+            newUser
         );
+
         confirmationTokenService.saveConfirmationToken(confirmationToken);
 
         return sendEmailToUser(student, token);

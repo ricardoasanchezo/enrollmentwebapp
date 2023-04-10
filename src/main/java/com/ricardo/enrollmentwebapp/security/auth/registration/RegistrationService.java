@@ -7,6 +7,7 @@ import com.ricardo.enrollmentwebapp.security.user.MyUser;
 import com.ricardo.enrollmentwebapp.security.user.Role;
 import com.ricardo.enrollmentwebapp.security.user.MyUserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -36,12 +37,7 @@ public class RegistrationService
 
 
         return myUserService.signUpUser(
-                new MyUser(
-                        request.getUsername(),
-                        request.getPassword(),
-                        Role.USER,
-                        false
-                )
+                request
         );
     }
 

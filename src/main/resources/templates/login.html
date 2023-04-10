@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
-    <title>Please Log In</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/style/formstyle.css}" />
+    <link rel="stylesheet" type="text/css" href="../static/style/formstyle.css" />
+    <title>Log In</title>
 </head>
 <body>
-<h1>Please Log In</h1>
-<div th:if="${param.error}">
-    Invalid username and password.</div>
-<div th:if="${param.logout}">
-    You have been logged out.</div>
-<form th:action="@{/auth/authenticate}" method="post">
-    <div>
-        <input type="text" name="username" placeholder="Username"/>
-    </div>
-    <div>
-        <input type="password" name="password" placeholder="Password"/>
-    </div>
-    <input type="submit" value="Log in" />
-</form>
+<!--    <div th:if="${param.error}">Invalid username and password.</div>-->
+<!--    <div th:if="${param.logout}">You have been logged out.</div>-->
+
+    <form class="login-form" method="post" action="/login">
+        <h2>Log In!</h2>
+
+<!--        <div class="alert alert-success" role="alert">You have been logged out</div>-->
+
+        <label for="username" class="sr-only"></label>
+        <input type="text" id="username" name="username" placeholder="Y00123456" required autofocus>
+
+        <label for="password" class="sr-only"></label>
+        <input type="password" id="password" name="password" placeholder="Password" required>
+
+        <button type="submit">Log In</button>
+<!--        <button type="button">Forgor password</button>-->
+        
+        <a href="/auth/register">New? Register here!</a>
+    </form>
 </body>
 </html>

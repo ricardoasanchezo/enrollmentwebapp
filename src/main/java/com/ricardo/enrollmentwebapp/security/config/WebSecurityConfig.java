@@ -3,49 +3,46 @@ package com.ricardo.enrollmentwebapp.security.config;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @AllArgsConstructor
 @EnableWebSecurity
 public class WebSecurityConfig
 {
-    private final JwtAuthFilter jwtAuthFilter;
-    private final AuthenticationProvider authProvider;
-
-
+    private final UserDetailsService userDetailsService;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception
     {
+        String[] staticResources = {
+                "/style/**",
+                "/images/**",
+                "/script/**",};
+
         http.csrf().disable()
                 .authorizeHttpRequests()
-                    .requestMatchers("/auth/**")
+                    .requestMatchers("/auth/**", "/usertest", "/homepage", "/login")
+                    .permitAll()
+                    .requestMatchers(staticResources)
                     .permitAll()
                     .anyRequest()
                     //.permitAll()
                     .authenticated()
                     .and()
-                .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                    .and()
-                    .authenticationProvider(authProvider)
-                    .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                //.formLogin()
-//                    .loginPage("/auth/login")
-//                    .loginProcessingUrl("/auth/authenticate")
+                .formLogin()
+                    .loginPage("/auth/login")
+                    .loginProcessingUrl("/login")
                     //.successForwardUrl("/homepage.html")
-                    //.defaultSuccessUrl("/homepage.html")
+                    .defaultSuccessUrl("/homepage", true)
                     //.failureUrl("/login.html?error=true")
                     //.failureHandler(authenticationFailureHandler())
-                    //.and()
-                    //.logout()
+                    .and()
+                    .logout()
                     //.logoutUrl("/perform_logout")
-                    //.deleteCookies("JSESSIONID")
+                    .deleteCookies("JSESSIONID")
                     //.logoutSuccessHandler(logoutSuccessHandler())
                 ;
 

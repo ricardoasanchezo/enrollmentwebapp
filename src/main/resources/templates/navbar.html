@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Navigation Bar</title>
+</head>
+<body>
+    <nav id="nav-bar" th:fragment="navbar">
+        <img th:src="@{/images/inter-logo.png}" alt="Inter Logo" src="">
+<!--        <div id="header-icon" class="material-icons">dataset</div>-->
+        <h2 id="title"><a class="nav-link" href="/homepage">Enrollment Web Application</a></h2>
+        <a class="nav-link" href="/homepage">Home</a>
+        <a class="nav-link" href="/student/courses">My Courses</a>
+        <a class="nav-link" href="">Enrollment</a>
+        <a class="nav-link" href="/usertest">Auth Test</a>
+        <span sec:authorize="isAuthenticated()">
+            <a class="nav-link" href="/logout">Log Out</a>
+        </span>
+        <span sec:authorize="isAnonymous()">
+            <a class="nav-link" href="/auth/login">Log In</a>
+        </span>
+    </nav>
+</body>
+</html>

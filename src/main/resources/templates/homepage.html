@@ -1,9 +1,11 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Your first Spring application</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" type="text/css" href="../static/style/style.css" />
+        <link rel="stylesheet" type="text/css" th:href="@{/style/style.css}" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
     </head>
 
@@ -11,22 +13,15 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
         <header id="header">
-            <nav id="nav-bar">
-                <!-- <img id="header-img" src="https://drive.google.com/file/d/1Do2PJIQ0IYqmX2rAn0Y4en3Mh6E1XPov/view?usp=sharing" alt=""> -->
-                <div id="header-icon" class="material-icons">dataset</div>
-                <h1 id="title">Enrollment Web Application</h1>
-                <a class="nav-link" href="#">My Classes</a>
-                <a class="nav-link" href="#pricing-text">Enrollment</a>
-                <a class="nav-link" href="#form">Offers</a>
-            </nav>
+            <div th:insert="~{navbar :: navbar}"></div>
         </header>
 
     <div id="main">
         <div id="content">
 
-            <h1>Enrollment Web Application</h1>
+            <h1>Welcome!</h1>
 
-            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. </p>
+            <p>Here, you will be able to register as an Inter Bayamon student and view your classes.</p>
 
             <div id="feature-list">
                 <div class="feature-icon">

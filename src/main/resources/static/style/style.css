@@ -1,15 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap');
 
 :root {
-	--backgroundColor: #eeeeee;
-	--secondaryColor: #008445;
+	--backgroundColor: #020415;
+	--textColor: wheat;
+	/*--secondaryColor: #008445;*/
+	--secondaryColor: #EFCA08;
 	--tertiaryColor: #EFCA08;
 
 	--transitionTime: 350ms;
 }
 
 body {
-	background-color: var(--backgroundColor);
+	/*background-color: var(--backgroundColor);*/
+	background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("../images/inter-bayamon-background.png");
+	background-position: center;
+	background-attachment: fixed;
+	background-size: cover;
+	color: white;
 	text-align: center;
 	font-family: 'Inter', sans-serif;
 	margin: 0;
@@ -17,8 +24,7 @@ body {
 }
 
 #header {
-	/*background-color: #eeeeee;*/
-	background-color: var(--backgroundColor);
+	/*background-color: var(--backgroundColor);*/
 	position: fixed;
 	top: 0;
 	width: 100%;
@@ -34,8 +40,9 @@ body {
 		border-bottom: 1px solid #EFCA08;
 	}
 
-		#header-img {
-			height: 70px;
+		#nav-bar img {
+			height: 60px;
+			border-radius: 50%;
 		}
 
 		#header-icon {
@@ -52,7 +59,7 @@ body {
 			display: block;
 			text-decoration: none;
 			font-size: 20px;
-			color: black;
+			color: white;
 			margin: 0 10px 0 10px;
 			padding: 10px;
 			transition: var(--transitionTime);

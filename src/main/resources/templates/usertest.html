@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Welcome to Spring Security Thymeleaf tutorial</title>
+</head>
+<body>
+<h2>Welcome</h2>
+<p>Spring Security Thymeleaf tutorial</p>
+<div sec:authorize="isAuthenticated()">Text visible only to authenticated users.</div>
+<div sec:authorize="isAnonymous()">Text visible only to anonymous users.</div>
+Authenticated user's username:
+<div sec:authorize="isAuthenticated()">
+  <div sec:authentication="principal.username"></div>
+</div>
+
+</body>
+</html>

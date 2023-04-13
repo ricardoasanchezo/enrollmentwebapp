@@ -13,14 +13,6 @@ public class AuthenticationRestController
 {
     private final RegistrationService registrationService;
 
-//    @PostMapping("/register")
-//    public String register(@RequestBody RegistrationRequest request) throws Exception
-//    {
-//        String response = registrationService.register(request);
-//        System.out.println(response);
-//        return response;
-//    }
-
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegistrationRequest request) throws Exception
     {

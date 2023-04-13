@@ -1,0 +1,42 @@
+.course-container {
+    display: grid;
+    grid-template-areas:
+				"icon code"
+				"icon name";
+    justify-content:start;
+    column-gap:10px;
+    background-color: whitesmoke;
+    color: black;
+    margin: 10px;
+    height: 60px;
+    max-height: 60px;
+    width: 350px;
+    max-width: 350px;
+    font-size: 15px;
+}
+
+.course-icon {
+    grid-area: icon;
+    color: white;
+    min-width: 60px;
+    max-width: 60px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.course-code {
+    grid-area: code;
+    width: 100%;
+    text-align: left;
+    font-weight: bold;
+    margin-top:9px;
+}
+
+.course-name {
+    grid-area: name;
+    width: 100%;
+    text-align: left;
+    font-style: italic;
+}

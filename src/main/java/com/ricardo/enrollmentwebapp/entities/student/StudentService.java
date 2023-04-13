@@ -13,7 +13,6 @@ import java.util.List;
 public class StudentService
 {
     private final StudentRepository studentRepository;
-    // private final MajorService majorService;
 
     public Student findStudentById(String id) throws Exception
     {
@@ -26,11 +25,11 @@ public class StudentService
         return findStudentById(id).getApprovedCourses();
     }
 
-    public List<Course> getApprovedCoursesInMajor(String studentId) throws Exception
+    public List<Course> getApprovedCoursesInMajor(String id) throws Exception
     {
         // TODO: configure get courses from student so searching by student ID in database is case insensitive
 
-        Student student = findStudentById(studentId);
+        Student student = findStudentById(id);
         Major major = student.getMajor();
 
         List<Course> approvedCourses = student.getApprovedCourses();
@@ -46,14 +45,41 @@ public class StudentService
         return approvedCoursesInMajor;
     }
 
-//    public List<Course> getStudentNotApprovedCourses(String id) throws Exception
+    public List<Course> getRemainingCoursesInMajor(String id) throws Exception
+    {
+        Student student = findStudentById(id);
+        Major major = student.getMajor();
+
+        List<Course> approvedCourses = getApprovedCoursesInMajor(id);
+        List<Course> remainingCourses = new ArrayList<>();
+
+        for (Course majorCourse: major.getCourses())
+        {
+            boolean isApproved = approvedCourses.contains(majorCourse);
+            if (!isApproved)
+                remainingCourses.add(majorCourse);
+        }
+
+        return remainingCourses;
+    }
+
+//    public List<Course> getCoursesDetailed(String id) throws Exception
 //    {
 //        Student student = findStudentById(id);
 //        Major major = student.getMajor();
 //
-//        for (:)
+//        List<Course> approvedCourses = student.getApprovedCourses();
+//        List<Course> approvedCoursesInMajor = new ArrayList<>();
+//
+//        for (Course majorCourse: major.getCourses())
 //        {
+//            boolean isApproved = approvedCourses.contains(majorCourse);
+//            if (isApproved)
+//                approvedCoursesInMajor.add(majorCourse);
+//            else
 //
 //        }
+//
+//        return approvedCoursesInMajor;
 //    }
 }

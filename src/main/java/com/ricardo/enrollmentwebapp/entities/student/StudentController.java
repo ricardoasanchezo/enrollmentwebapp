@@ -9,11 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
-@RequestMapping("student")
+@RequestMapping("/student")
 @AllArgsConstructor
 public class StudentController
 {
@@ -33,8 +32,17 @@ public class StudentController
     @GetMapping("/courses")
     public String courses(Model model) throws Exception
     {
-        List<Course> courses = studentService.getApprovedCourses(getCurrentUsername());
-        model.addAttribute("courses", courses);
+        String id = getCurrentUsername();
+
+        List<Course> allApprovedCourses = studentService.getApprovedCourses(id);
+        model.addAttribute("allApprovedCourses", allApprovedCourses);
+
+        List<Course> approvedCoursesInMajor = studentService.getApprovedCoursesInMajor(id);
+        model.addAttribute("approvedCoursesInMajor", approvedCoursesInMajor);
+
+        List<Course> remainingCoursesInMajor = studentService.getRemainingCoursesInMajor(id);
+        model.addAttribute("remainingCoursesInMajor", remainingCoursesInMajor);
+
         return "courses";
     }
 }

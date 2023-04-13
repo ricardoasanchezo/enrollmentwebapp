@@ -21,9 +21,6 @@
     
     <h1>These are all of your approved classes!</h1>
     
-<!--    <p>Here, you will be able to register as an Inter Bayamon student and view your classes.</p>-->
-    
-    
     <div th:each="course : ${courses}">
       <div th:text="${course.getCode()}"></div>
     </div>

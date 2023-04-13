@@ -9,4 +9,14 @@ public class InputValidator
     {
         return input.matches(regex);
     }
+
+    public static boolean isStudentIdValid(String id)
+    {
+        return matchesRegex(id, STUDENT_ID_REGEX);
+    }
+
+    public static boolean isPasswordValid(String id)
+    {
+        return matchesRegex(id, PASSWORD_REGEX);
+    }
 }

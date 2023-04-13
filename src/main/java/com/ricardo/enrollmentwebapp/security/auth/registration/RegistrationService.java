@@ -36,9 +36,7 @@ public class RegistrationService
             return "Student ID invalid!";
 
 
-        return myUserService.signUpUser(
-                request
-        );
+        return myUserService.signUpUser(request);
     }
 
     /**
@@ -70,4 +68,5 @@ public class RegistrationService
 
         return "confirmed";
     }
+
 }

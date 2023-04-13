@@ -103,9 +103,14 @@ public class MyUserService implements UserDetailsService
         String link = "http://localhost:8080/auth/confirm?token=" + token;
         String emailText = buildEmail(student.getId(), link);
 
-        emailService.send(student.getEmail(), emailText);
+        // emailService.send(student.getEmail(), emailText);
 
-        return "Email was sent to " + student.getEmail();
+        boolean sendSuccess = emailService.sendSync(student.getEmail(), emailText);
+
+        String successMessage =  "Email was sent to " + student.getId() + "'s email. Remember to check your spam folder!";
+        String failMessage = "Email could not be sent :c";
+
+        return (sendSuccess) ?  successMessage : failMessage;
     }
 
     /**

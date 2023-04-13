@@ -36,7 +36,29 @@ public class EmailService implements EmailSender
         catch (MessagingException e)
         {
             LOGGER.error("failed to send email", e);
-            throw new IllegalStateException("failed to send email");
+            throw new IllegalStateException("Failed to send email");
+        }
+    }
+
+    public boolean sendSync(String sendTo, String emailText)
+    {
+        try
+        {
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+            helper.setText(emailText, true);
+            helper.setTo(sendTo);
+            helper.setSubject("Confirm your email");
+            helper.setFrom("enrollment@interbayamon.com");
+
+            mailSender.send(mimeMessage);
+
+            return true;
+        }
+        catch (MessagingException e)
+        {
+            return false;
         }
     }
 }

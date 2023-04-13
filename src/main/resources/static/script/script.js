@@ -11,10 +11,7 @@ function validateRegisterForm()
     if (!passwordsMatch(password))
         return alert("Passwords do not match!");
 
-    register(username, password).then(()=>
-    {
-        alert("register successful");
-    });
+    register(username, password).then(r => alert(r))
 }
 
 function getUsername()
@@ -57,12 +54,15 @@ async function register(username, password)
                 }
             );
 
-        const result = await response.json();
-        console.log("Success:", result);
+        // console.log("Result: ", result);
+        let result = await response.json();
+        // alert(result.response);
+        return result.response;
     }
     catch (error)
     {
         console.error("Error:", error);
+        return "No student found with provided ID!";
     }
 }
 

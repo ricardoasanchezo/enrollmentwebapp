@@ -17,7 +17,8 @@ public class StudentService
 
     public Student findStudentById(String id) throws Exception
     {
-        return studentRepository.findById(id).orElseThrow(() -> new Exception("Student not found: " + id));
+        // return studentRepository.findById(id).orElseThrow(() -> new Exception("Student not found: " + id));
+        return studentRepository.findById(id).orElseThrow();
     }
 
     public List<Course> getApprovedCourses(String id) throws Exception
@@ -27,6 +28,8 @@ public class StudentService
 
     public List<Course> getApprovedCoursesInMajor(String studentId) throws Exception
     {
+        // TODO: configure get courses from student so searching by student ID in database is case insensitive
+
         Student student = findStudentById(studentId);
         Major major = student.getMajor();
 

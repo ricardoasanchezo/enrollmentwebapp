@@ -3,7 +3,7 @@
 	  xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Your first Spring application</title>
+	<title>Your courses</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" type="text/css" th:href="@{/style/style.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/style/coursestyle.css}" />
@@ -26,26 +26,43 @@
 			</h1>
 		</div>
 		
-		
-		<div th:each="course : ${allApprovedCourses}" class="course-container">
-			<div class="course-icon" style="background-color: green">
-				<span class="material-icons">done</span>
-			</div>
-			<span th:text="${course.getCode()}" class="course-code"></span>
-			<span th:text="${course.getTitle()}" class="course-name"></span>
-		</div>
-		
-		<div th:each="course : ${remainingCoursesInMajor}" class="course-container">
-			<div class="course-icon" style="background-color: red">
-				<span class="material-icons">close</span>
+		<div style="display: flex; flex-direction: row; justify-content: center">
+			<div>
+				<div th:each="course : ${allApprovedCourses}" class="course-container">
+					<div class="course-icon" style="background-color: green">
+						<span class="material-icons">done</span>
+					</div>
+					<span th:text="${course.getCode()}" class="course-code"></span>
+					<span th:text="${course.getTitle()}" class="course-name"></span>
+				</div>
 			</div>
 			
-			<span th:text="${course.getCode()}" class="course-code"></span>
-			<span th:text="${course.getTitle()}" class="course-name"></span>
+			<div>
+				<div th:each="course : ${remainingCoursesInMajor}" class="course-container">
+					<div class="course-icon" style="background-color: red">
+						<span class="material-icons">close</span>
+					</div>
+					
+					<span th:text="${course.getCode()}" class="course-code"></span>
+					<span th:text="${course.getTitle()}" class="course-name"></span>
+				</div>
+			</div>
+			
+			<div>
+				<div th:each="course : ${remainingDistributiveCourses}" class="course-container">
+					<div class="course-icon" style="background-color: red">
+						<span class="material-icons">close</span>
+					</div>
+					
+					<span th:text="${course.getCode()}" class="course-code"></span>
+					<span th:text="${course.getTitle()}" class="course-name"></span>
+				</div>
+			</div>
 		</div>
+		
 	</div>
 	
-	<footer>This is some footer text</footer>
+	<footer th:insert="~{fragments/footer :: footer}"></footer>
 
 </div>
 

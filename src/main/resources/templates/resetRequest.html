@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" th:href="@{/style/formstyle.css}" />
+	<link rel="stylesheet" type="text/css" href="../static/style/formstyle.css" />
+	<title>Reset your password</title>
+</head>
+<body>
+<form class="login-form" method="post" action="">
+	<h2>Reset your password!</h2>
+	
+	<p>
+		This service is available to Inter Bayamon students.
+		If you already registered, but forgot your password,
+		a password reset link will be sent to your institutional email.
+	</p>
+	
+	<label for="username"></label>
+	<input type="text" id="username" name="username" placeholder="Y00123456" required autofocus>
+	
+	<button id="requestButton" type="button" onclick="sendResetRequest()">Get password reset email</button>
+	
+	<script>
+		function getUsername()
+		{
+			let username = document.getElementById("username").value;
+			const STUDENT_ID_REGEX = /^[a-zA-Z][0-9]{8}$/;
+			
+			return matchesRegex(username, STUDENT_ID_REGEX) ? username : "";
+		}
+		
+		async function sendResetRequest()
+		{
+			let button = document.getElementById("requestButton");
+			button.disabled = true;
+			button.innerText = "wait...";
+			
+			let username = getUsername();
+			if (username.length === 0)
+				return alert("Invalid Student ID format!");
+			
+			try {
+				const response = await fetch
+				(
+						"http://localhost:8080/auth/resetRequest?username=" + username,
+						{
+							method: "POST",
+							headers: {"Content-Type": "application/json",},
+						}
+				);
+				
+				let result = await response.json();
+				return result.response;
+			}
+			catch (error)
+			{
+				console.error("Error:", error);
+				return "No student found with provided ID!";
+			}
+		}
+		
+		function matchesRegex(string, regex)
+		{
+			return regex.test(string);
+		}
+	</script>
+</form>
+</body>
+</html>

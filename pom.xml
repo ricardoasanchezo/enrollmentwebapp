@@ -12,6 +12,7 @@
 	<artifactId>enrollmentwebapp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>enrollmentwebapp</name>
+	<packaging>jar</packaging>
 	<description>Enrollment Web Application for Inter Bayamon</description>
 	<properties>
 		<java.version>19</java.version>

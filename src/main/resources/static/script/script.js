@@ -54,9 +54,7 @@ async function register(username, password)
                 }
             );
 
-        // console.log("Result: ", result);
         let result = await response.json();
-        // alert(result.response);
         return result.response;
     }
     catch (error)

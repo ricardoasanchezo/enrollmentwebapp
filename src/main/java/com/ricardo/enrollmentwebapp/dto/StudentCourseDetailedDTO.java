@@ -10,6 +10,6 @@ public record StudentCourseDetailedDTO
     String majorName,
     List<Course> approvedCourses,
     List<Course> remainingCourses,
-    List<Course> approvedDistributiveRequirements,
-    List<Course> remainingDistributiveRequirements
+    List<Course> approvedDistributiveCourses,
+    List<Course> remainingDistributiveCourses
 ){}

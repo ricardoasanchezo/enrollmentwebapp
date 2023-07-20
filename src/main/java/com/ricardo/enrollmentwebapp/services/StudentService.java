@@ -48,6 +48,26 @@ public class StudentService
         return approvedCoursesInMajor;
     }
 
+    public List<Course> getApprovedDistributiveCourses(String id)
+    {
+        // TODO: configure get courses from student so searching by student ID in database is case insensitive
+
+        Student student = findStudentById(id);
+        Major major = student.getMajor();
+
+        List<Course> approvedCourses = student.getApprovedCourses();
+        List<Course> distributiveCourses = major.getDistributiveRequirementCourses();
+        List<Course> approvedDistributiveCoursesInMajor = new ArrayList<>();
+
+        for (Course course: approvedCourses)
+        {
+            if (distributiveCourses.contains(course))
+                approvedDistributiveCoursesInMajor.add(course);
+        }
+
+        return approvedDistributiveCoursesInMajor;
+    }
+
     public List<Course> getRemainingCoursesInMajor(String id)
     {
         Student student = findStudentById(id);

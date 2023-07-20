@@ -1,5 +1,6 @@
 package com.ricardo.enrollmentwebapp.controllers;
 
+import com.ricardo.enrollmentwebapp.dto.StudentCourseDetailedDTO;
 import com.ricardo.enrollmentwebapp.entities.Course;
 import com.ricardo.enrollmentwebapp.services.StudentService;
 import lombok.AllArgsConstructor;
@@ -31,29 +32,15 @@ public class StudentController
     }
 
     @GetMapping("/courses")
-    public String courses(Model model) throws Exception
+    public String courses(Model model)
     {
-        String id = getCurrentUsername();
+        var studentDetailedCourses = studentService.getDetailedStudentCourses(getCurrentUsername());
 
-        List<Course> allApprovedCourses = studentService.getApprovedCourses(id);
-        model.addAttribute("allApprovedCourses", allApprovedCourses);
-
-        List<Course> approvedCoursesInMajor = studentService.getApprovedCoursesInMajor(id);
-        model.addAttribute("approvedCoursesInMajor", approvedCoursesInMajor);
-
-        List<Course> remainingCoursesInMajor = studentService.getRemainingCoursesInMajor(id);
-        model.addAttribute("remainingCoursesInMajor", remainingCoursesInMajor);
-
-        List<Course> remainingDistributiveCourses = studentService.getRemainingDistributiveRequirements(id);
-        model.addAttribute("remainingDistributiveCourses", remainingDistributiveCourses);
+        model.addAttribute("allApprovedCourses", studentDetailedCourses.approvedCourses());
+        model.addAttribute("remainingCoursesInMajor", studentDetailedCourses.remainingCourses());
+        model.addAttribute("remainingDistributiveCourses", studentDetailedCourses.remainingDistributiveCourses());
+        model.addAttribute("approvedDistributiveCourses", studentDetailedCourses.approvedDistributiveCourses());
 
         return "courses";
     }
-
-//    @GetMapping("/courses")
-//    @ResponseBody
-//    public StudentCourseDetailedDTO coursesDetailed() throws Exception
-//    {
-//        return studentService.getDetailedStudentCourses(getCurrentUsername());
-//    }
 }

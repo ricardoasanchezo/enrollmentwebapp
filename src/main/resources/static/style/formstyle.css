@@ -72,3 +72,15 @@ body {
 			background-color: black;
 			color: white;
 		}
+
+.success-message {
+	color: darkgreen;
+	background-color: lightgreen;
+	padding: 10px;
+}
+
+.error-message {
+	color: darkred;
+	background-color: lightpink;
+	padding: 10px;
+}

@@ -7,12 +7,13 @@
     <title>Log In</title>
 </head>
 <body>
-<!--    <div th:if="${param.error}">Invalid username and password.</div>-->
-<!--    <div th:if="${param.logout}">You have been logged out.</div>-->
+
 
     <form class="login-form" method="post" action="/login">
         <h2>Log In!</h2>
-
+		
+		    <div th:if="${param.error}" class="error-message">Invalid username or password</div>
+		    <div th:if="${param.logout}" class="success-message">You have been logged out</div>
 <!--        <div class="alert alert-success" role="alert">You have been logged out</div>-->
 
         <label for="username" class="sr-only"></label>

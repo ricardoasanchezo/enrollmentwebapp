@@ -32,37 +32,51 @@
 		
 		async function sendResetRequest()
 		{
-			let button = document.getElementById("requestButton");
-			button.disabled = true;
-			button.innerText = "wait...";
-			
 			let username = getUsername();
 			if (username.length === 0)
 				return alert("Invalid Student ID format!");
 			
-			try {
+			try
+			{
+				disableButton();
+				
 				const response = await fetch
 				(
-						"http://localhost:8080/auth/resetRequest?username=" + username,
-						{
-							method: "POST",
-							headers: {"Content-Type": "application/json",},
-						}
+					"http://localhost:8080/auth/resetRequest?username=" + username,
+					{
+						method: "POST",
+						headers: {"Content-Type": "application/json",},
+					}
 				);
 				
 				let result = await response.json();
-				return result.response;
+				alert(result.response);
 			}
 			catch (error)
 			{
 				console.error("Error:", error);
-				return "No student found with provided ID!";
+				alert("No student found with provided ID!");
+				enableButton();
 			}
 		}
 		
 		function matchesRegex(string, regex)
 		{
 			return regex.test(string);
+		}
+		
+		function enableButton()
+		{
+			let button = document.getElementById("requestButton");
+			button.disabled = false;
+			button.innerText = "Get password reset email";
+		}
+		
+		function disableButton()
+		{
+			let button = document.getElementById("requestButton");
+			button.disabled = true;
+			button.innerText = "wait...";
 		}
 	</script>
 </form>

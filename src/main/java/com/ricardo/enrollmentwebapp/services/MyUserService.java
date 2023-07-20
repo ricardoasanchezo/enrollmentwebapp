@@ -251,9 +251,9 @@ public class MyUserService implements UserDetailsService
     {
         String link = "http://localhost:8080/auth/resetPassword?token=" + token;
         String email = String.format("""
-                Hello, %s!
-                Reset your password using this link. It will expire shortly so hurry up!
-                %s
+                <h1>Hello, %s!</h1>
+                <p>Reset your password using this link. It will expire shortly so hurry up!</p>
+                <a href="%s">Reset your password here!</a>
                 """,
                 student.getId(), link
         );
@@ -269,16 +269,19 @@ public class MyUserService implements UserDetailsService
     public String resetPassword(String token, String password)
     {
         PasswordToken passwordToken = passwordTokenService.getToken(token).orElse(null);
-        if (passwordToken == null ||
-            passwordToken.getExpiresAt().isBefore(LocalDateTime.now()) ||
-            passwordToken.getConfirmedAt() != null)
-        {
+
+        if (passwordToken == null)
             return "There was an error. Password was not updated!";
-        }
+
+        if (passwordToken.getExpiresAt().isBefore(LocalDateTime.now()))
+            return "This password reset request is expired. Please make a new password reset request.";
+
+        if (passwordToken.getConfirmedAt() != null)
+            return "This password reset request has already been used!";
 
         myUserRepository.updatePassword(passwordToken.getMyUser().getUsername(), passwordEncoder.encode(password));
         passwordTokenRepository.updateConfirmedAt(passwordToken.getToken(), LocalDateTime.now());
 
-        return "Password updated!";
+        return "Password was updated successfully!";
     }
 }

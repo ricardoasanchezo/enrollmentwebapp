@@ -1,10 +1,6 @@
 .course-container {
-    display: grid;
-    grid-template-areas:
-				"icon code"
-				"icon name";
-    justify-content:start;
-    column-gap:10px;
+    display: flex;
+    flex-direction: row;
     background-color: whitesmoke;
     color: black;
     margin: 10px;
@@ -16,7 +12,6 @@
 }
 
 .course-icon {
-    grid-area: icon;
     color: white;
     min-width: 60px;
     max-width: 60px;
@@ -27,16 +22,27 @@
 }
 
 .course-code {
-    grid-area: code;
     width: 100%;
     text-align: left;
     font-weight: bold;
-    margin-top:9px;
+    margin: 10px 0 5px 10px ;
 }
 
 .course-name {
-    grid-area: name;
     width: 100%;
     text-align: left;
     font-style: italic;
+    font-size: 12px;
+    margin-left: 10px ;
+}
+
+.course-credit {
+    font-size: 20px;
+    min-width: 60px;
+    max-width: 60px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
 }

@@ -41,7 +41,7 @@ public class EmailService implements EmailSender
 //        }
     }
 
-    public boolean sendSync(String sendTo, String emailText)
+    public boolean sendSync(String sendTo, String emailText, String subject)
     {
         try
         {
@@ -50,7 +50,7 @@ public class EmailService implements EmailSender
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setText(emailText, true);
             helper.setTo(sendTo);
-            helper.setSubject("Confirm your email");
+            helper.setSubject(subject);
             helper.setFrom("enrollment@interbayamon.com");
 
             mailSender.send(mimeMessage);

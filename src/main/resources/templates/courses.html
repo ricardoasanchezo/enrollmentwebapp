@@ -3,11 +3,12 @@
 	  xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Your courses</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" type="text/css" th:href="@{/style/style.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/style/coursestyle.css}" />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<title>Your courses</title>
+	<link rel="icon" href="/images/inter-logo.png">
 </head>
 
 <body>
@@ -20,15 +21,16 @@
 <div id="main">
 	<div id="content">
 		
-		<div sec:authorize="isAuthenticated()">
-			<h1>
-				These are all of <span sec:authentication="principal.username"></span>'s approved classes!
-			</h1>
+		<div id="info-container" sec:authorize="isAuthenticated()">
+			<span class="info-label">Student ID</span>
+			<span class="info-answer" th:text="${studentID}"></span>
+			
+			<span class="info-label">Degree</span>
+			<span class="info_answer" th:text="${major}"></span>
 		</div>
 		
 		<div style="display: flex; flex-direction: row; justify-content: center">
 			<div>
-				<h2>Approved courses</h2>
 				<div th:each="course : ${allApprovedCourses}" class="course-container">
 					<div class="course-icon" style="background-color: green">
 						<span class="material-icons">done</span>
@@ -42,7 +44,6 @@
 			</div>
 			
 			<div>
-				<h2>Remaining courses</h2>
 				<div th:each="course : ${remainingCoursesInMajor}" class="course-container">
 					<div class="course-icon" style="background-color: red">
 						<span class="material-icons">close</span>
@@ -55,7 +56,7 @@
 				</div>
 			</div>
 			
-			<div>
+			<div id="distributive-course-container">
 				<h2>Distributive courses</h2>
 				<div th:each="course : ${approvedDistributiveCourses}" class="course-container">
 					<div class="course-icon" style="background-color: green">
@@ -80,7 +81,6 @@
 				<p>You need to approve a total of two (2) distributive requirement courses</p>
 			</div>
 		</div>
-		
 	</div>
 	
 	<footer th:insert="~{fragments/footer :: footer}"></footer>

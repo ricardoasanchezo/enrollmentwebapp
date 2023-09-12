@@ -25,4 +25,7 @@ public class Major
 
     @ManyToMany(targetEntity = Course.class)
     private List<Course> distributiveRequirementCourses;
+
+    private int distributiveCreditsRequirement;
+    private int electiveCreditsRequirement;
 }

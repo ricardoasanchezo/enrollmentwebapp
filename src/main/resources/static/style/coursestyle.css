@@ -1,3 +1,26 @@
+#info-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: start;
+
+    margin-top: 30px;
+    margin-left: 5%;
+    width: fit-content;
+}
+
+#info-container * {
+    /*margin-right:10px;*/
+    margin-bottom: 5px;
+}
+
+.info-label {
+    font-style: italic;
+}
+
+.info-label::after {
+    content: ":";
+}
+
 .course-container {
     display: flex;
     flex-direction: row;
@@ -45,4 +68,8 @@
     justify-content: center;
     align-items: center;
     margin-left: auto;
+}
+
+#distributive-course-container {
+
 }

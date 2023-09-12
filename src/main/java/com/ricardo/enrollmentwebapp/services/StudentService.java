@@ -16,6 +16,7 @@ import java.util.List;
 public class StudentService
 {
     private final StudentRepository studentRepository;
+    private final CourseFilterService courseFilterService;
 
     public Student findStudentById(String id) // throws Exception
     {
@@ -121,6 +122,13 @@ public class StudentService
                 remainingCourses.add(course);
         }
 
+        // Filter appreciation courses
+        courseFilterService.filterCourses(approvedCourses, remainingCourses, CourseFilterService.APPRECIATION_CODES);
+        // Filter history courses
+        courseFilterService.filterCourses(approvedCourses, remainingCourses, CourseFilterService.HISTORY_CODES);
+        // Filter english courses
+        courseFilterService.filterEnglishCourses(approvedCourses, remainingCourses);
+
         List<Course> approvedDistributiveCourses = new ArrayList<>();
         List<Course> remainingDistributiveCourses = new ArrayList<>();
 
@@ -132,6 +140,9 @@ public class StudentService
             else
                 remainingDistributiveCourses.add(course);
         }
+
+        // Filter distributive courses
+        courseFilterService.filterDistributiveCourses(major, approvedDistributiveCourses, remainingDistributiveCourses);
 
         return new StudentCourseDetailedDTO(
                 student.getId(),

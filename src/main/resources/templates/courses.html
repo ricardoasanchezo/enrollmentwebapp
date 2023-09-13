@@ -19,68 +19,79 @@
 </header>
 
 <div id="main">
-	<div id="content">
+	<div id="course-page-container">
 		
-		<div id="info-container" sec:authorize="isAuthenticated()">
-			<span class="info-label">Student ID</span>
-			<span class="info-answer" th:text="${studentID}"></span>
+		<div id="student-info-container" sec:authorize="isAuthenticated()" style="grid-area: info">
+			<span class="student-info-label">Student ID</span>
+			<span class="student-info-answer" th:text="${student.getId()}"></span>
 			
-			<span class="info-label">Degree</span>
-			<span class="info_answer" th:text="${major}"></span>
+			<span class="student-info-label">Degree</span>
+			<span class="student-info-answer" th:text="${student.getMajor().getName()}"></span>
+			
+			<span class="student-info-label">Distributive Credits Required</span>
+			<span class="student-info-answer" th:text="${student.getMajor().getDistributiveCreditsRequirement()}"></span>
+			
+			<span class="student-info-label">Elective Credits Required</span>
+			<span class="student-info-answer" th:text="${student.getMajor().getElectiveCreditsRequirement()}"></span>
 		</div>
 		
-		<div style="display: flex; flex-direction: row; justify-content: center">
-			<div>
-				<div th:each="course : ${allApprovedCourses}" class="course-container">
-					<div class="course-icon" style="background-color: green">
-						<span class="material-icons">done</span>
-					</div>
-					<div>
-						<div th:text="${course.getCode()}" class="course-code"></div>
-						<div th:text="${course.getTitle()}" class="course-name"></div>
-					</div>
-					<span th:text="${course.getCreditCount()}" class="course-credit"></span>
+		<div id="main-course-container" style="grid-area: main">
+			<div th:each="course : ${allApprovedCourses}" class="course-card">
+				<div class="course-icon" style="background-color: green">
+					<span class="material-icons">done</span>
 				</div>
+				<div>
+					<div th:text="${course.getCode()}" class="course-code"></div>
+					<div th:text="${course.getTitle()}" class="course-name"></div>
+				</div>
+				<span th:text="${course.getCreditCount()}" class="course-credit"></span>
 			</div>
-			
-			<div>
-				<div th:each="course : ${remainingCoursesInMajor}" class="course-container">
-					<div class="course-icon" style="background-color: red">
-						<span class="material-icons">close</span>
-					</div>
-					<div>
-						<div th:text="${course.getCode()}" class="course-code"></div>
-						<div th:text="${course.getTitle()}" class="course-name"></div>
-					</div>
-					<span th:text="${course.getCreditCount()}" class="course-credit"></span>
+		
+			<div th:each="course : ${remainingCoursesInMajor}" class="course-card">
+				<div class="course-icon" style="background-color: red">
+					<span class="material-icons">close</span>
 				</div>
-			</div>
-			
-			<div id="distributive-course-container">
-				<h2>Distributive courses</h2>
-				<div th:each="course : ${approvedDistributiveCourses}" class="course-container">
-					<div class="course-icon" style="background-color: green">
-						<span class="material-icons">done</span>
-					</div>
-					<div>
-						<div th:text="${course.getCode()}" class="course-code"></div>
-						<div th:text="${course.getTitle()}" class="course-name"></div>
-					</div>
-					<span th:text="${course.getCreditCount()}" class="course-credit"></span>
+				<div>
+					<div th:text="${course.getCode()}" class="course-code"></div>
+					<div th:text="${course.getTitle()}" class="course-name"></div>
 				</div>
-				<div th:each="course : ${remainingDistributiveCourses}" class="course-container">
-					<div class="course-icon" style="background-color: red">
-						<span class="material-icons">close</span>
-					</div>
-					<div>
-						<div th:text="${course.getCode()}" class="course-code"></div>
-						<div th:text="${course.getTitle()}" class="course-name"></div>
-					</div>
-					<span th:text="${course.getCreditCount()}" class="course-credit"></span>
-				</div>
-				<p>You need to approve a total of two (2) distributive requirement courses</p>
+				<span th:text="${course.getCreditCount()}" class="course-credit"></span>
 			</div>
 		</div>
+		
+		<div id="distributive-course-container" style="grid-area: dist">
+			<h2>Distributive Courses</h2>
+			
+			<p>
+				Some courses require a different amount of credits. Some majors don't require any distributive courses.
+				Your major requires a total of
+				<span style="font-weight: bold" th:text="${student.getMajor().getDistributiveCreditsRequirement()}"></span>
+				distributive requirement credits.
+			</p>
+			
+			<div th:each="course : ${approvedDistributiveCourses}" class="course-card">
+				<div class="course-icon" style="background-color: green">
+					<span class="material-icons">done</span>
+				</div>
+				<div>
+					<div th:text="${course.getCode()}" class="course-code"></div>
+					<div th:text="${course.getTitle()}" class="course-name"></div>
+				</div>
+				<span th:text="${course.getCreditCount()}" class="course-credit"></span>
+			</div>
+			
+			<div th:each="course : ${remainingDistributiveCourses}" class="course-card">
+				<div class="course-icon" style="background-color: red">
+					<span class="material-icons">close</span>
+				</div>
+				<div>
+					<div th:text="${course.getCode()}" class="course-code"></div>
+					<div th:text="${course.getTitle()}" class="course-name"></div>
+				</div>
+				<span th:text="${course.getCreditCount()}" class="course-credit"></span>
+			</div>
+		</div>
+		
 	</div>
 	
 	<footer th:insert="~{fragments/footer :: footer}"></footer>

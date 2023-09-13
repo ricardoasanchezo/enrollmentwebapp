@@ -1,37 +1,87 @@
-#info-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-items: start;
-
-    margin-top: 30px;
-    margin-left: 5%;
-    width: fit-content;
+:root {
+    --grid-gap: 10px;
+    --course-card-width: 350px;
 }
 
-#info-container * {
+#course-page-container {
+    display: grid;
+    grid-template-areas:
+        "info info dist"
+        "main main dist";
+
+    width: fit-content;
+    margin: auto;
+    padding: 30px;
+
+    background-color: lightgrey;
+}
+
+#student-info-container {
+    display: grid;
+    grid-template-columns: repeat(1, auto 1fr);
+    justify-items: start;
+
+    width: fit-content;
+    margin: 0 0 20px 0;
+    font-size: 16px;
+    color: #0b0c0c;
+}
+
+#student-info-container * {
     /*margin-right:10px;*/
     margin-bottom: 5px;
 }
 
-.info-label {
+.student-info-label {
     font-style: italic;
+    margin-right: 10px;
 }
 
-.info-label::after {
+.student-info-label::after {
     content: ":";
 }
 
-.course-container {
+.student-info-answer {
+    font-weight: bold;
+}
+
+#main-course-container {
+    display: grid;
+    grid-gap: var(--grid-gap);
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#distributive-course-container {
+    display: grid;
+    grid-gap: var(--grid-gap);
+    grid-template-columns: repeat(1, 1fr);
+    align-content: start;
+    margin-left: 20px;
+    padding: 20px;
+    background-color: darkgray;
+}
+
+#distributive-course-container h2 {
+    margin: 0;
+}
+
+#distributive-course-container p {
+    max-width: var(--course-card-width);
+    text-align: justify;
+}
+
+.course-card {
     display: flex;
     flex-direction: row;
     background-color: whitesmoke;
     color: black;
-    margin: 10px;
     height: 60px;
     max-height: 60px;
-    width: 350px;
-    max-width: 350px;
+    width: var(--course-card-width);
+    max-width: var(--course-card-width);
     font-size: 15px;
+
+    box-shadow: 0 4px 4px -4px #222
 }
 
 .course-icon {
@@ -70,6 +120,3 @@
     margin-left: auto;
 }
 
-#distributive-course-container {
-
-}

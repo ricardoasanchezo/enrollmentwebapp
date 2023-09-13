@@ -43,8 +43,9 @@ public class StudentController
         model.addAttribute("remainingDistributiveCourses", studentDetailedCourses.remainingDistributiveCourses());
         model.addAttribute("approvedDistributiveCourses", studentDetailedCourses.approvedDistributiveCourses());
 
+        model.addAttribute("student", student);
         model.addAttribute("studentID", student.getId());
-        model.addAttribute("major", student.getMajor().getName());
+        model.addAttribute("major", student.getMajor());
         // model.addAttribute("totalApprovedCredits", )
 
         return "courses";

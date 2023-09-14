@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap');
 
 :root {
-	--backgroundColor: #020415;
-	--textColor: white;
-	--secondaryColor: #EFCA08;
-	--tertiaryColor: #EFCA08;
+	--dark-primary: #020415;
+	--text-color: white;
+	--inter-yellow: #EFCA08;
+	--inter-yellow: #EFCA08;
 
-	--transitionTime: 350ms;
+	--transition-time: 350ms;
 }
 
 body {
@@ -59,13 +59,13 @@ body {
 		}
 
 		.login-form button {
-			background-color: var(--secondaryColor);
+			background-color: var(--inter-yellow);
 			border: none;
 			font-size: 18px;
 			margin-top: 20px;
 			margin-bottom: 20px;
 			padding: 12px;
-			transition: var(--transitionTime);
+			transition: var(--transition-time);
 		}
 
 		.login-form button:hover {

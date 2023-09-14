@@ -50,4 +50,22 @@ public class StudentController
 
         return "courses";
     }
+
+    @GetMapping("/enrollment")
+    public String enrollment(Model model)
+    {
+        Student student = studentService.findStudentById(getCurrentUsername());
+        var studentDetailedCourses = studentService.getDetailedStudentCourses(student.getId());
+
+        model.addAttribute("allApprovedCourses", studentDetailedCourses.approvedCourses());
+        model.addAttribute("remainingCoursesInMajor", studentDetailedCourses.remainingCourses());
+        model.addAttribute("remainingDistributiveCourses", studentDetailedCourses.remainingDistributiveCourses());
+        model.addAttribute("approvedDistributiveCourses", studentDetailedCourses.approvedDistributiveCourses());
+
+        model.addAttribute("student", student);
+        model.addAttribute("studentID", student.getId());
+        model.addAttribute("major", student.getMajor());
+
+        return "enrollment";
+    }
 }

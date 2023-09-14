@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en"
+<html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
     <head>
@@ -12,49 +12,39 @@
 
     <body>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-        <header id="header">
-            <div th:insert="~{fragments/navbar :: navbar}"></div>
-        </header>
+		
+		<header id="header" th:insert="~{fragments/navbar :: navbar}"></header>
 
     <div id="main">
         <div id="content">
 
             <h1>Welcome!</h1>
 
-            <p>Here, you will be able to register as an Inter Bayamon student and view your classes.</p>
+            <p>Here, you will be able to register as an Inter Bayamon student and view your approved and remaining courses.</p>
 
             <div id="feature-list">
                 <div class="feature-icon">
                     <div class="material-icons">eco</div>
                 </div>
                 <div class="feature-text">
-                    <p class="feature-title">Quality Ingredients</p>
-                    <p>Our products are made with locally sourced, gluten free, soy free, keto friendly, 100% organic, FDA approved ingredients.</p>
+                    <p class="feature-title">Courses</p>
+                    <p>You can view in detail all the required courses in your major, along with approved and remaining.</p>
                 </div>
 
                 <div class="feature-icon">
                     <div class="material-icons">settings</div>
                 </div>
                 <div class="feature-text">
-                    <p class="feature-title">Build Your Own</p>
-                    <p>Your desserts are completely customizable. You can choose the flavors, frosting and toppings of your desserts to fit your own taste. We also offer custom packaging for special occasions.</p>
-                </div>
-
-                <div class="feature-icon">
-                    <div class="material-icons">local_shipping</div>
-                </div>
-                <div class="feature-text">
-                    <p class="feature-title">Premium Shipping</p>
-                    <p>We deliver to you as soon as possible. Orders above $200 get free first class national shipping. We also offer curbside pickup on your nearest store.</p>
+                    <p class="feature-title">Enrollment</p>
+                    <p>You can choose between your remaining classes to generate an enrollment document.</p>
                 </div>
 
                 <div class="feature-icon">
                     <div class="material-icons">masks</div>
                 </div>
                 <div class="feature-text">
-                    <p class="feature-title">Safety First</p>
-                    <p>Our stablishments meet and exceed the safety measures listed by the World Health Organization, to ensure we meet the standars of our clients.</p>
+                    <p class="feature-title">Comments</p>
+                    <p>You can send bug reports, recommendations and other comments for the improvement of this service.</p>
                 </div>
             </div>
 
@@ -95,18 +85,7 @@
                     <p class="price-box-btn">Add to cart</p>
                 </a>
             </div>
-
-            <p>It is a long-established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. </p>
-
-            <form id="form" action="">
-                <label for="studentId">Enter your student ID to register!</label>
-                <input id="studentId" type="studentId" name="studentId" placeholder="Y00000000" required>
-
-                <!-- <label for="password">Enter your password!</label>
-                <input id="password" type="password" name="password" required> -->
-
-                <input id="submit" type="submit" value="Register!">
-            </form>
+			
         </div>
 		
 		<footer th:insert="~{fragments/footer :: footer}"></footer>

@@ -7,7 +7,7 @@
 	<link rel="stylesheet" type="text/css" th:href="@{/style/style.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/style/coursestyle.css}" />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<title>Your courses</title>
+	<title>Enroll courses</title>
 	<link rel="icon" href="/images/inter-logo.png">
 </head>
 
@@ -34,17 +34,7 @@
 		</div>
 		
 		<div id="main-course-container" style="grid-area: main">
-			<div th:each="course : ${allApprovedCourses}" class="course-card">
-				<div class="course-icon" style="background-color: green">
-					<span class="material-icons">done</span>
-				</div>
-				<div>
-					<div th:text="${course.getCode()}" class="course-code"></div>
-					<div th:text="${course.getTitle()}" class="course-name"></div>
-				</div>
-				<span th:text="${course.getCreditCount()}" class="course-credit"></span>
-			</div>
-		
+			
 			<div th:each="course : ${remainingCoursesInMajor}" class="course-card">
 				<div class="course-icon" style="background-color: red">
 					<span class="material-icons">close</span>
@@ -89,7 +79,7 @@
 				<span th:text="${course.getCreditCount()}" class="course-credit"></span>
 			</div>
 		</div>
-		
+	
 	</div>
 	
 	<footer th:insert="~{fragments/footer :: footer}"></footer>

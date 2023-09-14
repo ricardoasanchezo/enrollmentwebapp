@@ -1,22 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap');
 
 :root {
-	--backgroundColor: #020415;
-	--textColor: wheat;
-	/*--secondaryColor: #008445;*/
-	--secondaryColor: #EFCA08;
-	--tertiaryColor: #EFCA08;
+	--dark-primary: #101012;
+	--dark-secondary: #1F1F1F;
 
-	--transitionTime: 350ms;
+	--dark-text-color: black;
+	--light-text-color: white;
+
+	--inter-yellow: #FED53F;
+	--inter-green: #008445;
+
+	--mobile-size-breakpoint: 800px;
+	--navbar-height: 70px;
+
+	--transition-time: 350ms;
+}
+
+body, header {
+	/*background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("../images/inter-bayamon-background.png");*/
+	/*background-position: center;*/
+	/*background-attachment: fixed;*/
+	/*background-size: cover;*/
 }
 
 body {
-	/*background-color: var(--backgroundColor);*/
-	background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("../images/inter-bayamon-background.png");
-	background-position: center;
-	background-attachment: fixed;
-	background-size: cover;
-	color: white;
+	background-color: var(--dark-primary);
+	color: var(--light-text-color);
 	text-align: center;
 	font-family: 'Inter', sans-serif;
 	margin: 0;
@@ -24,11 +33,7 @@ body {
 }
 
 #header {
-	/*background-color: var(--backgroundColor);*/
-	background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("../images/inter-bayamon-background.png");
-	background-position: center;
-	background-attachment: fixed;
-	background-size: cover;
+	background-color: var(--dark-secondary);
 	position: fixed;
 	top: 0;
 	width: 100%;
@@ -40,19 +45,20 @@ body {
 		flex-direction: row;
 		justify-content: flex-end;
 		align-items: center;
-		margin: 0 10% 0 10%;
-		border-bottom: 1px solid #EFCA08;
-		box-shadow: 0 10px 6px -6px #222;
+		margin: 0 5% 0 5%;
+		height: var(--navbar-height);
+		/*border-bottom: 1px solid #EFCA08;*/
+		/*box-shadow: 0 10px 6px -6px #222;*/
 	}
 
 		#nav-bar img {
-			height: 60px;
+			height: 50px;
 			border-radius: 50%;
 		}
 
 		#header-icon {
 			font-size: 70px;
-			color: var(--secondaryColor);
+			color: var(--inter-yellow);
 		}
 
 		#title {
@@ -63,21 +69,21 @@ body {
 		.nav-link {
 			display: block;
 			text-decoration: none;
-			font-size: 20px;
-			color: white;
+			font-size: 18px;
+			color: var(--light-text-color);
 			margin: 0 10px 0 10px;
 			padding: 10px;
-			transition: var(--transitionTime);
+			transition: var(--transition-time);
 		}
 
 		.nav-link:hover {
-			background-color: var(--secondaryColor);
-			color: white;
+			background-color: var(--inter-green);
+			color: var(--light-text-color);
 		}
 
 #main {
 	position: relative;
-	top: 80px;
+	top: var(--navbar-height);
 }
 
 	#content {
@@ -92,8 +98,8 @@ body {
 			grid-row-gap: 30px;
 			align-items: center;
 			padding: 18px 0 18px 0;
-			border-top: 1px solid var(--secondaryColor);
-			border-bottom: 1px solid var(--secondaryColor);
+			border-top: 1px solid var(--inter-yellow);
+			border-bottom: 1px solid var(--inter-yellow);
 		}
 
 			.feature-icon {
@@ -101,11 +107,11 @@ body {
 			}
 
 				.feature-icon .material-icons {
-					background-color: var(--tertiaryColor);
+					background-color: var(--inter-yellow);
 					padding: 10px;
 					border-radius: 50%;
 					font-size: 40px;
-					color: white;
+					color: var(--light-text-color);
 				}
 
 			.feature-text {
@@ -133,8 +139,8 @@ body {
 			.price-box {
 				display: flex;
 				flex-direction: column;
-				background-color: var(--backgroundColor);
-				color: black;
+				background-color: var(--dark-primary);
+				color: var(--dark-text-color);
 				text-decoration: none;
 				position: relative;
 				top: 0;
@@ -143,7 +149,7 @@ body {
 				height: inherit;
 				width: 100%;
 				border: 1px solid black;
-				transition: var(--transitionTime);
+				transition: var(--transition-time);
 			}
 
 			.price-box:hover {
@@ -152,7 +158,7 @@ body {
 
 				.price-box-title {
 					display: block;
-					background-color: var(--secondaryColor);
+					background-color: var(--inter-yellow);
 					margin: 0;
 					padding: 10px;
 					font-size: 20px;
@@ -176,11 +182,11 @@ body {
 					margin: auto 0 0 0;
 					padding: 10px;
 					color: transparent;
-					transition: var(--transitionTime);
+					transition: var(--transition-time);
 				}
 
 				.price-box:hover .price-box-btn {
-					background-color: var(--tertiaryColor);
+					background-color: var(--inter-yellow);
 					color: black;
 				}
 
@@ -195,8 +201,8 @@ body {
 		padding: 10px;
 		width: 95%;
 		max-width: 450px;
-		border-top: 1px solid var(--tertiaryColor);
-		border-bottom: 1px solid var(--tertiaryColor);
+		border-top: 1px solid var(--inter-yellow);
+		border-bottom: 1px solid var(--inter-yellow);
 	}
 
 		#form label {
@@ -214,22 +220,22 @@ body {
 		}
 
 		#submit {
-			background-color: var(--secondaryColor);
+			background-color: var(--inter-yellow);
 			border: none;
 			margin: 5px;
 			padding: 8px;
 			border-radius: 5px;
 			font-size: 16px;
-			transition: var(--transitionTime);
+			transition: var(--transition-time);
 		}
 
 		#submit:hover {
-			background-color: var(--secondaryColor);
+			background-color: var(--inter-yellow);
 		}
 
 	footer {
 		background-color: lightgrey;
-		color: black;
+		color: var(--dark-text-color);
 		font-size: 16px;
 		font-weight: bold;
 		margin: 30px 0 0 0;

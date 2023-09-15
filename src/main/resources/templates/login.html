@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" th:href="@{/style/formstyle.css}" />
-    <link rel="stylesheet" type="text/css" href="../static/style/formstyle.css" />
-    <title>Log In</title>
-	<link rel="icon" href="/images/inter-logo.png">
+	<title>Log In</title>
+	<div th:replace="fragments/head :: head"></div>
+	
+<!--    <meta charset="utf-8">-->
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/style/formstyle.css}" />-->
+<!--    <link rel="stylesheet" type="text/css" href="../static/style/formstyle.css" />-->
+<!--	<link rel="icon" href="/images/inter-logo.png">-->
 </head>
 <body>
 
@@ -27,7 +29,7 @@
         
         <a href="/auth/register">New? Register here!</a>
 		<br>
-		<a href="/auth/resetRequest">Forgot password? Reset here!</a>
+		<a href="/auth/reset-request">Forgot password? Reset here!</a>
     </form>
 </body>
 </html>

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" th:href="@{/style/formstyle.css}" />
-    <link rel="stylesheet" type="text/css" href="../static/style/formstyle.css" />
-    <script type="text/javascript" th:src="@{/script/script.js}"></script>
-    <title>Register</title>
-	<link rel="icon" href="/images/inter-logo.png">
+	<title>Register</title>
+	<div th:replace="fragments/head :: head"></div>
+	
+<!--    <meta charset="utf-8">-->
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/style/formstyle.css}" />-->
+<!--    <link rel="stylesheet" type="text/css" href="../static/style/formstyle.css" />-->
+<!--    <script type="text/javascript" th:src="@{/script/script.js}"></script>-->
+<!--	<link rel="icon" href="/images/inter-logo.png">-->
 </head>
 <body>
     <form class="login-form" method="post" action="">

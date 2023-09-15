@@ -44,13 +44,13 @@ public class AuthenticationController
         return "confirm";
     }
 
-    @GetMapping("/resetRequest")
+    @GetMapping("/reset-request")
     public String resetRequest()
     {
-        return "resetRequest";
+        return "reset-request";
     }
 
-    @PostMapping("/resetRequest")
+    @PostMapping("/reset-request")
     @ResponseBody
     public ResponseEntity<String> resetRequest(@RequestParam String username)
     {
@@ -58,14 +58,14 @@ public class AuthenticationController
         return ResponseEntity.ok(Json.stringify("response", response));
     }
 
-    @GetMapping("/resetPassword")
+    @GetMapping("/reset-password")
     public String resetPassword(@RequestParam("token") String token, Model model)
     {
         model.addAttribute("token", token);
-        return "resetPassword";
+        return "reset-password";
     }
 
-    @PostMapping("/resetPassword")
+    @PostMapping("/reset-password")
     @ResponseBody
     public ResponseEntity<String> resetPassword(@RequestBody ResetRequest request)
     {

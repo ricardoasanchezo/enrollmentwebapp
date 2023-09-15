@@ -61,7 +61,7 @@ body {
 			color: var(--inter-yellow);
 		}
 
-		#title {
+		#navbar-title {
 			margin-right: auto;
 			font-size: 25px;
 		}

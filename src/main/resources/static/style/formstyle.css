@@ -8,69 +8,52 @@
 	--transition-time: 350ms;
 }
 
-body {
-	/*background-color: var(--backgroundColor);*/
-	background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("../images/inter-bayamon-background.png");
-	background-position: center;
-	background-attachment: fixed;
-	background-size: cover;
-	text-align: center;
-	font-family: 'Inter', sans-serif;
-	margin: 0;
-	padding: 0;
+#inter-tiger {
+	max-height: 200px;
+	margin: 20px;
 }
 
-#main {
-	position: relative;
-	top: 80px;
+.login-form {
+	color: var(--dark-text-color);
+	display: flex;
+	background-color: whitesmoke;
+	flex-direction: column;
+	justify-content: center;
+	padding: 20px;
+	max-width: 250px;
+	box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+	margin: auto;
 }
 
-	#content {
-		margin: auto;
-		width: 95%;
-		max-width: 900px;
+	.login-form h2 {
+		color: var(--dark-text-color);
 	}
 
-	.login-form {
-		display: flex;
-		background-color: whitesmoke;
-		flex-direction: column;
-		justify-content: center;
-		padding: 20px;
-		max-width: 350px;
-		box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-
-		position: absolute;
-		left: 50%;
-		top: 40%;
-		transform: translate(-50%, -50%);
+	.login-form p {
+		display: block;
+		text-align: justify;
 	}
 
-		.login-form p {
-			display: block;
-			text-align: justify;
-		}
+	.login-form input {
+		margin: 10px 0 10px 0;
+		padding: 10px;
+		font-size: 20px;
+	}
 
-		.login-form input {
-			margin: 10px 0 10px 0;
-      		padding: 10px;
-			font-size: 20px;
-		}
+	.login-form button {
+		background-color: var(--inter-yellow);
+		border: none;
+		font-size: 18px;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		padding: 12px;
+		transition: var(--transition-time);
+	}
 
-		.login-form button {
-			background-color: var(--inter-yellow);
-			border: none;
-			font-size: 18px;
-			margin-top: 20px;
-			margin-bottom: 20px;
-			padding: 12px;
-			transition: var(--transition-time);
-		}
-
-		.login-form button:hover {
-			background-color: black;
-			color: white;
-		}
+	.login-form button:hover {
+		background-color: black;
+		color: white;
+	}
 
 .success-message {
 	color: darkgreen;

@@ -17,7 +17,6 @@ public class CourseFilterService
 {
     private final CourseRepository courseRepository;
 
-
     public static final String[] BEGINNER_ENGLISH_CODES = { "GEEN1101", "GEEN1102", "GEEN1103"} ;
     public static final String[] INTERMEDIATE_ENGLISH_CODES = { "GEEN1201", "GEEN1202", "GEEN1203"} ;
     public static final String[] ADVANCED_ENGLISH_CODES = { "GEEN2311", "GEEN2312", "GEEN2313"} ;
@@ -42,6 +41,7 @@ public class CourseFilterService
             {
                 appreciationCourses.remove(appreciationCourse);
                 remainingCourses.removeAll(appreciationCourses);
+                return;
             }
         }
     }

@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap');
 
 :root {
+	--light-primary: #f0f0f0;
+	--light-secondary: #f1e9ce;
+	--light-tertiary: #efe3ba;
+
 	--dark-primary: #101012;
 	--dark-secondary: #1F1F1F;
 
@@ -14,6 +18,13 @@
 	--navbar-height: 70px;
 
 	--transition-time: 350ms;
+
+/*
+Light Colors
+Body Background Color: #f0f0f0
+Courses Background Color: #f1e9ce
+Distributive Courses Background color: #efe3ba
+*/
 }
 
 body, header {
@@ -24,8 +35,8 @@ body, header {
 }
 
 body {
-	background-color: var(--dark-primary);
-	color: var(--light-text-color);
+	background-color: var(--light-primary);
+	color: var(--dark-text-color);
 	text-align: center;
 	font-family: 'Inter', sans-serif;
 	margin: 0;
@@ -33,7 +44,7 @@ body {
 }
 
 #header {
-	background-color: var(--dark-secondary);
+	background-color: var(--light-primary);
 	position: fixed;
 	top: 0;
 	width: 100%;
@@ -47,7 +58,7 @@ body {
 		align-items: center;
 		margin: 0 5% 0 5%;
 		height: var(--navbar-height);
-		/*border-bottom: 1px solid #EFCA08;*/
+		border-bottom: 1px solid var(--inter-yellow);
 		/*box-shadow: 0 10px 6px -6px #222;*/
 	}
 
@@ -70,14 +81,14 @@ body {
 			display: block;
 			text-decoration: none;
 			font-size: 18px;
-			color: var(--light-text-color);
+			color: var(--dark-text-color);
 			margin: 0 10px 0 10px;
 			padding: 10px;
 			transition: var(--transition-time);
 		}
 
 		.nav-link:hover {
-			background-color: var(--inter-green);
+			background-color: var(--inter-yellow);
 			color: var(--light-text-color);
 		}
 

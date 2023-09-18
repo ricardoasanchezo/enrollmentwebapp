@@ -17,7 +17,8 @@ function validateRegisterForm()
 function getUsername()
 {
     let username = document.getElementById("username").value;
-    const STUDENT_ID_REGEX = /^[a-zA-Z][0-9]{8}$/;
+    // const STUDENT_ID_REGEX = /^[a-zA-Z][0-9]{8}$/;
+    const STUDENT_ID_REGEX = /\b(?:[A-Za-z]\d{8}|[A-Za-z]{2}\d{7})\b/;
 
     return matchesRegex(username, STUDENT_ID_REGEX) ? username : "";
 }

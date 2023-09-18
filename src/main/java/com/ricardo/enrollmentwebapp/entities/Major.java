@@ -1,6 +1,5 @@
 package com.ricardo.enrollmentwebapp.entities;
 
-import com.ricardo.enrollmentwebapp.entities.Course;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,7 +24,6 @@ public class Major
 
     @ManyToMany(targetEntity = Course.class)
     private List<Course> distributiveRequirementCourses;
-
     private int distributiveCreditsRequirement;
     private int electiveCreditsRequirement;
 }

@@ -3,12 +3,8 @@
 <head>
 	<title>Reset your password</title>
 	<div th:replace="fragments/head :: head"></div>
-	
-<!--	<meta charset="utf-8">-->
-<!--	<link rel="stylesheet" type="text/css" th:href="@{/style/formstyle.css}" />-->
-<!--	<link rel="stylesheet" type="text/css" href="../static/style/formstyle.css" />-->
-<!--	<link rel="icon" href="/images/inter-logo.png">-->
 </head>
+
 <body>
 <form class="login-form" method="post" action="">
 	<h2>Reset your password!</h2>
@@ -28,8 +24,8 @@
 		function getUsername()
 		{
 			let username = document.getElementById("username").value;
-			const STUDENT_ID_REGEX = /^[a-zA-Z][0-9]{8}$/;
-			
+			// const STUDENT_ID_REGEX = /^[a-zA-Z][0-9]{8}$/;
+			const STUDENT_ID_REGEX = /\b(?:[A-Za-z]\d{8}|[A-Za-z]{2}\d{7})\b/;
 			return matchesRegex(username, STUDENT_ID_REGEX) ? username : "";
 		}
 		

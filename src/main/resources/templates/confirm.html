@@ -3,26 +3,20 @@
 <head>
 	<title>Email Confirmation</title>
 	<div th:replace="fragments/head :: head"></div>
-	
-<!--	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />-->
-<!--	<link rel="stylesheet" type="text/css" th:href="@{/style/style.css}" />-->
-<!--	<link rel="preconnect" href="https://fonts.googleapis.com">-->
-<!--	<link rel="icon" href="/images/inter-logo.png">-->
 </head>
 
 <body>
-<!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
 
-<header id="header" th:insert="~{fragments/navbar :: navbar}"></header>
-
-<div id="main">
-	<div id="content">
-		<h1>Email Confirmed!</h1>
-		<p>
-			Your email has been confirmed and your account has been enabled. You can now log in!.
-		</p>
+	<header id="header" th:insert="~{fragments/navbar :: navbar}"></header>
+	
+	<div id="main">
+		<div id="content">
+			<h1>Email Confirmed!</h1>
+			<p>
+				Your email has been confirmed and your account has been enabled. You can now log in!.
+			</p>
+		</div>
 	</div>
-</div>
 
 </body>
 </html>

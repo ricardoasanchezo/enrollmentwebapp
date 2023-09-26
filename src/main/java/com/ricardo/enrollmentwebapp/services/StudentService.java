@@ -1,6 +1,6 @@
 package com.ricardo.enrollmentwebapp.services;
 
-import com.ricardo.enrollmentwebapp.dto.StudentCourseDetailedDTO;
+import com.ricardo.enrollmentwebapp.dto.StudentCourseDetailedDto;
 import com.ricardo.enrollmentwebapp.entities.Course;
 import com.ricardo.enrollmentwebapp.entities.Major;
 import com.ricardo.enrollmentwebapp.entities.Student;
@@ -105,7 +105,7 @@ public class StudentService
         return remainingDistributiveCourses;
     }
 
-    public StudentCourseDetailedDTO getDetailedStudentCourses(String id)
+    public StudentCourseDetailedDto getDetailedStudentCourses(String id)
     {
         Student student = findStudentById(id);
         Major major = student.getMajor();
@@ -144,7 +144,7 @@ public class StudentService
         // Filter distributive courses
         courseFilterService.filterDistributiveCourses(major, approvedDistributiveCourses, remainingDistributiveCourses);
 
-        return new StudentCourseDetailedDTO(
+        return new StudentCourseDetailedDto(
                 student.getId(),
                 major.getName(),
                 approvedCourses,

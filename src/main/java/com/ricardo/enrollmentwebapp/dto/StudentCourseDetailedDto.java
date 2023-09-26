@@ -4,7 +4,7 @@ import com.ricardo.enrollmentwebapp.entities.Course;
 
 import java.util.List;
 
-public record StudentCourseDetailedDTO
+public record StudentCourseDetailedDto
 (
     String studentId,
     String majorName,

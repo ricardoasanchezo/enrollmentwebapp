@@ -1,7 +1,5 @@
 package com.ricardo.enrollmentwebapp.controllers;
 
-import com.ricardo.enrollmentwebapp.dto.StudentCourseDetailedDTO;
-import com.ricardo.enrollmentwebapp.entities.Course;
 import com.ricardo.enrollmentwebapp.entities.Student;
 import com.ricardo.enrollmentwebapp.services.StudentService;
 import lombok.AllArgsConstructor;
@@ -11,8 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/student")

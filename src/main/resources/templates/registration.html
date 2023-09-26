@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+	<title>Register</title>
+	<div th:replace="fragments/head :: head"></div>
+	<script type="text/javascript" th:src="@{/script/registration-script.js}"></script>
+</head>
+<body>
+
+<div id="modal">
+	<div id="modal-box">
+		<div id="modal-title"></div>
+		<div id="modal-message"></div>
+		<button id="modal-button">Ok</button>
+	</div>
+</div>
+
+<img src="/images/inter-tiger.png" alt="Inter Tiger" id="inter-tiger">
+
+<form class="my-form" method="post" action="">
+	<p>
+		This service is available to Inter Bayamon students. When you register using
+		your student ID number, a confirmation link will be sent to your institutional email.
+	</p>
+	
+	<label for="username"></label>
+	<input type="text" id="username" name="username" placeholder="Y00123456" required>
+	
+	<label for="password"></label>
+	<input type="password" id="password" name="password" placeholder="Password" required>
+	
+	<label for="confirmPassword"></label>
+	<input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+	
+	<button type="button" onclick="register()">Register</button>
+	
+	<a href="/auth/login">Registered? Log in here!</a>
+</form>
+</body>
+</html>

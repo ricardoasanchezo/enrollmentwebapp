@@ -52,7 +52,11 @@ public class MyUserService implements UserDetailsService
         if (!InputValidator.matchesRegex(studentId, InputValidator.STUDENT_ID_REGEX))
             return "Student ID invalid!";
 
-        // Check if the username has a matching Student in the database
+        if (!InputValidator.isValidRegistrationRequest(request))
+            throw new Exception("Registration request is not valid");
+
+
+
         Student student = studentService.findStudentById(request.getUsername());
         if (student == null)
             return "There was no student found in database with id: " + request.getUsername();

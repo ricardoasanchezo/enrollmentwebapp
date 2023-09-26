@@ -5,6 +5,7 @@ import com.ricardo.enrollmentwebapp.utils.Json;
 import com.ricardo.enrollmentwebapp.utils.RegistrationRequest;
 import com.ricardo.enrollmentwebapp.utils.ResetRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,15 +27,30 @@ public class AuthenticationController
     @GetMapping("/register")
     public String register()
     {
-        return "register";
+        return "registration";
     }
 
+//    @PostMapping("/register")
+//    @ResponseBody
+//    public ResponseEntity<String> register(@RequestBody RegistrationRequest request)
+//    {
+//        String response = myUserService.register(request);
+//        return ResponseEntity.ok(Json.stringify("response", response));
+//    }
+
     @PostMapping("/register")
-    @ResponseBody
-    public ResponseEntity<String> register(@RequestBody RegistrationRequest request) throws Exception
+    // @ResponseBody
+    public ResponseEntity<String> registerUser(@RequestBody RegistrationRequest request)
     {
-        String response = myUserService.register(request);
-        return ResponseEntity.ok(Json.stringify("response", response));
+        try
+        {
+            myUserService.register(request);
+            return ResponseEntity.status(HttpStatus.OK).body("");
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("");
+        }
     }
 
     @GetMapping("/confirm")

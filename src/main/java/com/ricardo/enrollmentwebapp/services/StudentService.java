@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -18,22 +19,19 @@ public class StudentService
     private final StudentRepository studentRepository;
     private final CourseFilterService courseFilterService;
 
-    public Student findStudentById(String id) // throws Exception
+    public Optional<Student> findStudentById(String id) // throws Exception
     {
-        return studentRepository.findById(id).orElse(null);
-        // return studentRepository.findById(id).orElseThrow();
+        return studentRepository.findById(id);
     }
 
-    public List<Course> getApprovedCourses(String id)
-    {
-        return findStudentById(id).getApprovedCourses();
-    }
-
-    public List<Course> getApprovedCoursesInMajor(String id)
+    public List<Course> getApprovedCoursesInMajor(String id) throws Exception
     {
         // TODO: configure get courses from student so searching by student ID in database is case insensitive
 
-        Student student = findStudentById(id);
+        if (findStudentById(id).isEmpty())
+            throw new Exception("Student was not found");
+
+        Student student = findStudentById(id).get();
         Major major = student.getMajor();
 
         List<Course> approvedCourses = student.getApprovedCourses();
@@ -49,65 +47,12 @@ public class StudentService
         return approvedCoursesInMajor;
     }
 
-    public List<Course> getApprovedDistributiveCourses(String id)
+    public StudentCourseDetailedDto getDetailedStudentCourses(String id) throws Exception
     {
-        // TODO: configure get courses from student so searching by student ID in database is case insensitive
+        if (findStudentById(id).isEmpty())
+            throw new Exception("Student was not found");
 
-        Student student = findStudentById(id);
-        Major major = student.getMajor();
-
-        List<Course> approvedCourses = student.getApprovedCourses();
-        List<Course> distributiveCourses = major.getDistributiveRequirementCourses();
-        List<Course> approvedDistributiveCoursesInMajor = new ArrayList<>();
-
-        for (Course course: approvedCourses)
-        {
-            if (distributiveCourses.contains(course))
-                approvedDistributiveCoursesInMajor.add(course);
-        }
-
-        return approvedDistributiveCoursesInMajor;
-    }
-
-    public List<Course> getRemainingCoursesInMajor(String id)
-    {
-        Student student = findStudentById(id);
-        Major major = student.getMajor();
-
-        List<Course> approvedCourses = getApprovedCoursesInMajor(id);
-        List<Course> remainingCourses = new ArrayList<>();
-
-        for (Course majorCourse: major.getCourses())
-        {
-            boolean isApproved = approvedCourses.contains(majorCourse);
-            if (!isApproved)
-                remainingCourses.add(majorCourse);
-        }
-
-        return remainingCourses;
-    }
-
-    public List<Course> getRemainingDistributiveRequirements(String id)
-    {
-        Student student = findStudentById(id);
-        Major major = student.getMajor();
-
-        List<Course> approvedCourses = student.getApprovedCourses();
-        List<Course> remainingDistributiveCourses = new ArrayList<>();
-
-        for (Course course: major.getDistributiveRequirementCourses())
-        {
-            boolean isApproved = approvedCourses.contains(course);
-            if (!isApproved)
-                remainingDistributiveCourses.add(course);
-        }
-
-        return remainingDistributiveCourses;
-    }
-
-    public StudentCourseDetailedDto getDetailedStudentCourses(String id)
-    {
-        Student student = findStudentById(id);
+        Student student = findStudentById(id).get();
         Major major = student.getMajor();
 
         List<Course> approvedCourses = new ArrayList<>();

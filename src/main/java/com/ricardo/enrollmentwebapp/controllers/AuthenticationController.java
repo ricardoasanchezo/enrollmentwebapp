@@ -1,9 +1,9 @@
 package com.ricardo.enrollmentwebapp.controllers;
 
 import com.ricardo.enrollmentwebapp.services.MyUserService;
-import com.ricardo.enrollmentwebapp.utils.Json;
-import com.ricardo.enrollmentwebapp.utils.RegistrationRequest;
-import com.ricardo.enrollmentwebapp.utils.ResetRequest;
+import com.ricardo.enrollmentwebapp.dto.Json;
+import com.ricardo.enrollmentwebapp.dto.RegistrationRequest;
+import com.ricardo.enrollmentwebapp.dto.ResetRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,14 +30,6 @@ public class AuthenticationController
         return "registration";
     }
 
-//    @PostMapping("/register")
-//    @ResponseBody
-//    public ResponseEntity<String> register(@RequestBody RegistrationRequest request)
-//    {
-//        String response = myUserService.register(request);
-//        return ResponseEntity.ok(Json.stringify("response", response));
-//    }
-
     @PostMapping("/register")
     // @ResponseBody
     public ResponseEntity<String> registerUser(@RequestBody RegistrationRequest request)
@@ -45,11 +37,11 @@ public class AuthenticationController
         try
         {
             myUserService.register(request);
-            return ResponseEntity.status(HttpStatus.OK).body("");
+            return ResponseEntity.status(HttpStatus.OK).body("Registration Successful");
         }
         catch (Exception e)
         {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Registration Failed");
         }
     }
 
@@ -70,8 +62,15 @@ public class AuthenticationController
     @ResponseBody
     public ResponseEntity<String> resetRequest(@RequestParam String username)
     {
-        String response = myUserService.sendResetEmail(username);
-        return ResponseEntity.ok(Json.stringify("response", response));
+        try
+        {
+            myUserService.sendResetEmail(username);
+            return ResponseEntity.status(HttpStatus.OK).body("Password reset email was sent");
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing password reset request");
+        }
     }
 
     @GetMapping("/reset-password")

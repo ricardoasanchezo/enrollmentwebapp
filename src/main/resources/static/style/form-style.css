@@ -2,6 +2,8 @@
 
 #inter-tiger {
 	max-height: 180px;
+	display: block;
+	margin: auto;
 }
 
 .my-form {
@@ -18,11 +20,13 @@
 
 .my-form h2 {
 	color: var(--dark-text-color);
+	text-align: center;
 }
 
 .my-form p {
 	display: block;
 	text-align: justify;
+	margin: 20px 0 20px 0;
 }
 
 .my-form label {

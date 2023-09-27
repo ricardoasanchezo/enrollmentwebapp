@@ -29,9 +29,9 @@ public class StudentController
     }
 
     @GetMapping("/courses")
-    public String courses(Model model)
+    public String courses(Model model) throws Exception
     {
-        Student student = studentService.findStudentById(getCurrentUsername());
+        Student student = studentService.findStudentById(getCurrentUsername()).get();
         var studentDetailedCourses = studentService.getDetailedStudentCourses(student.getId());
 
         model.addAttribute("allApprovedCourses", studentDetailedCourses.approvedCourses());
@@ -50,18 +50,20 @@ public class StudentController
     @GetMapping("/enrollment")
     public String enrollment(Model model)
     {
-        Student student = studentService.findStudentById(getCurrentUsername());
-        var studentDetailedCourses = studentService.getDetailedStudentCourses(student.getId());
+//        Student student = studentService.findStudentById(getCurrentUsername());
+//        var studentDetailedCourses = studentService.getDetailedStudentCourses(student.getId());
+//
+//        model.addAttribute("allApprovedCourses", studentDetailedCourses.approvedCourses());
+//        model.addAttribute("remainingCoursesInMajor", studentDetailedCourses.remainingCourses());
+//        model.addAttribute("remainingDistributiveCourses", studentDetailedCourses.remainingDistributiveCourses());
+//        model.addAttribute("approvedDistributiveCourses", studentDetailedCourses.approvedDistributiveCourses());
+//
+//        model.addAttribute("student", student);
+//        model.addAttribute("studentID", student.getId());
+//        model.addAttribute("major", student.getMajor());
+//
+//        return "enrollment";
 
-        model.addAttribute("allApprovedCourses", studentDetailedCourses.approvedCourses());
-        model.addAttribute("remainingCoursesInMajor", studentDetailedCourses.remainingCourses());
-        model.addAttribute("remainingDistributiveCourses", studentDetailedCourses.remainingDistributiveCourses());
-        model.addAttribute("approvedDistributiveCourses", studentDetailedCourses.approvedDistributiveCourses());
-
-        model.addAttribute("student", student);
-        model.addAttribute("studentID", student.getId());
-        model.addAttribute("major", student.getMajor());
-
-        return "enrollment";
+        return "homepage";
     }
 }

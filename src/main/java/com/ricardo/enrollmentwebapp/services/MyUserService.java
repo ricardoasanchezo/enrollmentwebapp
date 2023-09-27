@@ -8,7 +8,7 @@ import com.ricardo.enrollmentwebapp.utils.InputValidator;
 import com.ricardo.enrollmentwebapp.utils.Role;
 import com.ricardo.enrollmentwebapp.entities.ConfirmationToken;
 import com.ricardo.enrollmentwebapp.entities.Student;
-import com.ricardo.enrollmentwebapp.utils.RegistrationRequest;
+import com.ricardo.enrollmentwebapp.dto.RegistrationRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -49,24 +49,24 @@ public class MyUserService implements UserDetailsService
     public String register(RegistrationRequest request) throws Exception
     {
         String studentId = request.getUsername();
-        if (!InputValidator.matchesRegex(studentId, InputValidator.STUDENT_ID_REGEX))
-            return "Student ID invalid!";
+
+        if (!studentId.matches(InputValidator.STUDENT_ID_REGEX))
+            throw new Exception("Student ID invalid!");
 
         if (!InputValidator.isValidRegistrationRequest(request))
             throw new Exception("Registration request is not valid");
 
+        if (studentService.findStudentById(request.getUsername()).isEmpty())
+            throw new Exception("Student with specified ID was not found!");
 
+        Student student = studentService.findStudentById(request.getUsername()).get();
 
-        Student student = studentService.findStudentById(request.getUsername());
-        if (student == null)
-            return "There was no student found in database with id: " + request.getUsername();
-
-        MyUser existingMyUser = myUserRepository.findByUsername(request.getUsername()).orElse(null);
-        if (existingMyUser != null)
+        MyUser existingUser = myUserRepository.findByUsername(request.getUsername()).orElse(null);
+        if (existingUser != null)
         {
-            if (existingMyUser.isEnabled())
+            if (existingUser.isEnabled())
             {
-                return "User " + existingMyUser.getUsername() + " has already been enabled!";
+                throw new Exception("User " + existingUser.getUsername() + " has already been enabled!");
             }
             else
             {
@@ -76,7 +76,7 @@ public class MyUserService implements UserDetailsService
                         token,
                         LocalDateTime.now(),
                         LocalDateTime.now().plusMinutes(15),
-                        existingMyUser
+                        existingUser
                 );
                 confirmationTokenService.saveConfirmationToken(confirmationToken);
 
@@ -297,14 +297,15 @@ public class MyUserService implements UserDetailsService
                 "</div></div>";
     }
 
-    public String sendResetEmail(String username)
+    public String sendResetEmail(String username) throws Exception
     {
-        if (!InputValidator.matchesRegex(username, InputValidator.STUDENT_ID_REGEX))
-            return "Student ID invalid!";
+        if (!username.matches(InputValidator.STUDENT_ID_REGEX))
+            throw new Exception("Student ID invalid");
 
-        MyUser user = myUserRepository.findByUsername(username).orElse(null);
-        if (user == null)
-            return "User does not exist!";
+        if (myUserRepository.findByUsername(username).isEmpty())
+            throw new UsernameNotFoundException("User was not found");
+
+        MyUser user = myUserRepository.findByUsername(username).get();
 
         PasswordToken passwordToken = new PasswordToken(
                 UUID.randomUUID().toString(),
@@ -315,21 +316,17 @@ public class MyUserService implements UserDetailsService
 
         passwordTokenService.savePasswordToken(passwordToken);
 
-        Student student = studentService.findStudentById(user.getUsername());
+        if (studentService.findStudentById(user.getUsername()).isEmpty())
+            throw new UsernameNotFoundException("Student was not found");
+
+        Student student = studentService.findStudentById(user.getUsername()).get();
 
         return sendResetEmail(student, passwordToken.getToken());
     }
 
     public String sendResetEmail(Student student, String token)
     {
-        String link = "http://localhost:8080/auth/resetPassword?token=" + token;
-//        String email = String.format("""
-//                <h1>Hello, %s!</h1>
-//                <p>Reset your password using this link. It will expire shortly so hurry up!</p>
-//                <a href="%s">Reset your password here!</a>
-//                """,
-//                student.getId(), link
-//        );
+        String link = "http://localhost:8080/auth/reset-password?token=" + token;
 
         String email = buildResetEmail(student.getId(), link);
 

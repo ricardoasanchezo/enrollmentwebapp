@@ -1,5 +1,7 @@
 package com.ricardo.enrollmentwebapp.utils;
 
+import com.ricardo.enrollmentwebapp.dto.RegistrationRequest;
+
 public class InputValidator
 {
     // public static final String STUDENT_ID_REGEX = "^[a-zA-Z][0-9]{8}$";

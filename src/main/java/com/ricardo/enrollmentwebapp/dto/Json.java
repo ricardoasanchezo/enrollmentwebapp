@@ -1,4 +1,4 @@
-package com.ricardo.enrollmentwebapp.utils;
+package com.ricardo.enrollmentwebapp.dto;
 
 public class Json
 {

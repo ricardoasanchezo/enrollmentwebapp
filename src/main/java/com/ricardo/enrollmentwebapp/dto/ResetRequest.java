@@ -1,13 +1,5 @@
 package com.ricardo.enrollmentwebapp.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-@AllArgsConstructor
-@Getter
-public class ResetRequest
+public record ResetRequest(String token, String password)
 {
-    private final String token;
-    private final String password;
-
 }

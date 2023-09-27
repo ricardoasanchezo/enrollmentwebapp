@@ -22,6 +22,7 @@ function register()
     }
 
     sendRequest(registrationRequest)
+        .then(r => r.json())
         .then(r => handle(r))
         .catch(e => failure(e));
 }
@@ -39,17 +40,8 @@ async function sendRequest(registrationRequest)
 
 function handle(r)
 {
-    if (r.ok)
-    {
-        // alert("Registration successful, redirecting to login")
-        document.getElementById("modal-button").onclick = () => window.location.href = domain + "/auth/login";
-        modal("Registration successful", "The registration was successful, click button to log in.");
-    }
-    else
-    {
-        endAnimation();
-        modal("Registration failed", "The registration process has failed, try again.");
-    }
+    modal(r.title, r.message);
+    endAnimation();
 }
 
 function failure(e)

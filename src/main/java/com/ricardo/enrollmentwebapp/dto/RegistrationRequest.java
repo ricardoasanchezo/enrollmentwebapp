@@ -1,14 +1,7 @@
 package com.ricardo.enrollmentwebapp.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-
-@Data
 @Builder
-@AllArgsConstructor
-public class RegistrationRequest
+public record RegistrationRequest(String username, String password)
 {
-    private final String username;
-    private final String password;
 }

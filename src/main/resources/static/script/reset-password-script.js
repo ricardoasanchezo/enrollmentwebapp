@@ -1,4 +1,4 @@
-function passwordRequest()
+function resetPassword()
 {
     let urlString = window.location.search;
     let urlParams = new URLSearchParams(urlString);
@@ -20,8 +20,9 @@ function passwordRequest()
         }
 
     sendPasswordRequest(passwordRequest)
+        .then(r => r.json())
         .then(r => handle(r))
-        .catch(e => failure(e))
+        .catch(e => failure(e));
 }
 
 async function sendPasswordRequest(request)

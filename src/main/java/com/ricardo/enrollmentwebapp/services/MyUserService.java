@@ -1,15 +1,17 @@
 package com.ricardo.enrollmentwebapp.services;
 
+import com.ricardo.enrollmentwebapp.dto.ModalResponse;
 import com.ricardo.enrollmentwebapp.entities.MyUser;
 import com.ricardo.enrollmentwebapp.entities.PasswordToken;
 import com.ricardo.enrollmentwebapp.repositories.MyUserRepository;
-import com.ricardo.enrollmentwebapp.repositories.PasswordTokenRepository;
 import com.ricardo.enrollmentwebapp.utils.InputValidator;
 import com.ricardo.enrollmentwebapp.utils.Role;
 import com.ricardo.enrollmentwebapp.entities.ConfirmationToken;
 import com.ricardo.enrollmentwebapp.entities.Student;
 import com.ricardo.enrollmentwebapp.dto.RegistrationRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,7 +28,6 @@ public class MyUserService implements UserDetailsService
     private final MyUserRepository myUserRepository;
     private final ConfirmationTokenService confirmationTokenService;
     private final PasswordTokenService passwordTokenService;
-    private final PasswordTokenRepository passwordTokenRepository;
     private final StudentService studentService;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
@@ -46,27 +47,22 @@ public class MyUserService implements UserDetailsService
      * @return The token the user needs to confirm for their account validation,
      * or a warning if the user already exists.
      */
-    public String register(RegistrationRequest request) throws Exception
+    public ResponseEntity<ModalResponse> register(RegistrationRequest request)
     {
-        String studentId = request.getUsername();
-
-        if (!studentId.matches(InputValidator.STUDENT_ID_REGEX))
-            throw new Exception("Student ID invalid!");
-
         if (!InputValidator.isValidRegistrationRequest(request))
-            throw new Exception("Registration request is not valid");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ModalResponse("Registration request invalid", "Your registration request is invalid. Check the student Id format and password length."));
 
-        if (studentService.findStudentById(request.getUsername()).isEmpty())
-            throw new Exception("Student with specified ID was not found!");
+        if (studentService.findStudentById(request.username()).isEmpty())
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ModalResponse("Student with specified ID was not found!", "The provided Id does not match any student. Check and try again."));
 
-        Student student = studentService.findStudentById(request.getUsername()).get();
+        Student student = studentService.findStudentById(request.username()).get();
 
-        MyUser existingUser = myUserRepository.findByUsername(request.getUsername()).orElse(null);
+        MyUser existingUser = myUserRepository.findByUsername(request.username()).orElse(null);
         if (existingUser != null)
         {
             if (existingUser.isEnabled())
             {
-                throw new Exception("User " + existingUser.getUsername() + " has already been enabled!");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ModalResponse("User already enabled", "The user with the provided Id has already been registered and enabled."));
             }
             else
             {
@@ -85,8 +81,8 @@ public class MyUserService implements UserDetailsService
         }
 
         MyUser newUser = new MyUser(
-                request.getUsername(),
-                passwordEncoder.encode(request.getPassword()),
+                request.username(),
+                passwordEncoder.encode(request.password()),
                 Role.USER,
                 false
         );
@@ -108,17 +104,17 @@ public class MyUserService implements UserDetailsService
         return sendConfirmationEmail(student, token);
     }
 
-    public String sendConfirmationEmail(Student student, String token)
+    public ResponseEntity<ModalResponse> sendConfirmationEmail(Student student, String token)
     {
         String link = "http://localhost:8080/auth/confirm?token=" + token;
         String emailText = buildRegisterEmail(student.getId(), link);
 
-        boolean sendSuccess = emailService.sendSync(student.getEmail(), emailText, "Confirm your email");
+        boolean isSuccessful = emailService.sendSync(student.getEmail(), emailText, "Confirm your email");
 
-        String successMessage =  "Email was sent to " + student.getId() + "'s email. Remember to check your spam folder!";
-        String failMessage = "Email could not be sent :c";
-
-        return (sendSuccess) ?  successMessage : failMessage;
+        if (isSuccessful)
+            return ResponseEntity.status(HttpStatus.OK).body(new ModalResponse("Confirmation Email Sent", "Account confirmation email was sent to " + student.getId()+ ". Remember to check your spam folder!"));
+        else
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new ModalResponse("Confirmation Email Couldn't Be Sent", "There was an error while sending the account confirmation email. Try again later."));
     }
 
     /**
@@ -297,13 +293,13 @@ public class MyUserService implements UserDetailsService
                 "</div></div>";
     }
 
-    public String sendResetEmail(String username) throws Exception
+    public ResponseEntity<ModalResponse> sendResetEmail(String username)
     {
         if (!username.matches(InputValidator.STUDENT_ID_REGEX))
-            throw new Exception("Student ID invalid");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ModalResponse("Student Id Invalid", "The provided Student Id is not valid. Check and try again."));
 
         if (myUserRepository.findByUsername(username).isEmpty())
-            throw new UsernameNotFoundException("User was not found");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ModalResponse("Student not found", "The student corresponding to the provided Id was not found."));
 
         MyUser user = myUserRepository.findByUsername(username).get();
 
@@ -321,39 +317,48 @@ public class MyUserService implements UserDetailsService
 
         Student student = studentService.findStudentById(user.getUsername()).get();
 
-        return sendResetEmail(student, passwordToken.getToken());
-    }
-
-    public String sendResetEmail(Student student, String token)
-    {
-        String link = "http://localhost:8080/auth/reset-password?token=" + token;
-
+        String link = "http://localhost:8080/auth/reset-password?token=" + passwordToken.getToken();
         String email = buildResetEmail(student.getId(), link);
 
-        boolean sendSuccess = emailService.sendSync(student.getEmail(), email, "Reset your password");
+        boolean isSuccessful = emailService.sendSync(student.getEmail(), email, "Reset your password");
 
-        String successMessage =  "Email was sent to " + student.getId() + "'s email. Remember to check your spam folder!";
-        String failMessage = "Email could not be sent :c";
+        if (isSuccessful)
+            return ResponseEntity.status(HttpStatus.OK).body(new ModalResponse("Password reset email sent", "Password reset email was sent to " + student.getId()+ ". Remember to check your spam folder!"));
+        else
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new ModalResponse("Password reset email couldn't be sent", "There was an error while sending the password reset email. Try again later."));
 
-        return (sendSuccess) ? successMessage : failMessage;
     }
 
-    public String resetPassword(String token, String password)
+//    public String sendResetEmail(Student student, String token)
+//    {
+//        String link = "http://localhost:8080/auth/reset-password?token=" + token;
+//        String email = buildResetEmail(student.getId(), link);
+//
+//        boolean isSuccessful = emailService.sendSync(student.getEmail(), email, "Reset your password");
+//
+//        if (isSuccessful)
+//            return ResponseEntity.status(HttpStatus.OK).body(new ModalResponse("Password reset email sent", "Password reset email was sent to " + student.getId()+ ". Remember to check your spam folder!"));
+//        else
+//            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new ModalResponse("Password reset email couldn't be sent", "There was an error while sending the password reset email. Try again later."));
+//
+//    }
+
+    public ResponseEntity<ModalResponse> resetPassword(String token, String password)
     {
         PasswordToken passwordToken = passwordTokenService.getToken(token).orElse(null);
 
         if (passwordToken == null)
-            return "There was an error. Password was not updated!";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ModalResponse("Token not found", "The password reset token was not found. Make a new password reset request."));
 
         if (passwordToken.getExpiresAt().isBefore(LocalDateTime.now()))
-            return "This password reset request is expired. Please make a new password reset request.";
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ModalResponse("Token expired", "The password reset token is expired. Make a new password reset request."));
 
         if (passwordToken.getConfirmedAt() != null)
-            return "This password reset request has already been used!";
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ModalResponse("Token spent", "The password reset token has already been used to update your password. Make a new password reset request."));
 
         myUserRepository.updatePassword(passwordToken.getMyUser().getUsername(), passwordEncoder.encode(password));
-        passwordTokenRepository.updateConfirmedAt(passwordToken.getToken(), LocalDateTime.now());
+        passwordTokenService.updateConfirmedAt(passwordToken.getToken(), LocalDateTime.now());
 
-        return "Password was updated successfully!";
+        return ResponseEntity.status(HttpStatus.OK).body(new ModalResponse("Password updated", "Your password was updated successfully. You can log in with your new password."));
     }
 }

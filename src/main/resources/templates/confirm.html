@@ -7,17 +7,20 @@
 
 <body>
 
-	<header id="header" th:insert="~{fragments/navbar :: navbar}"></header>
-	
-	<div id="main">
-		<div id="content">
-			<h1>Email Confirmed!</h1>
-			<p>
-				Your email has been confirmed and your account has been enabled. You can now <a href="/auth/login">log in</a>!
-			</p>
-			
-		</div>
+<div id="modal">
+	<div id="modal-box">
+		<div id="modal-title"></div>
+		<div id="modal-message"></div>
+		<a id="modal-button">Log In</a>
 	</div>
+</div>
+	
+<script>
+	window.onload = () => {
+		document.getElementById("modal-button").href = domain + "/auth/login";
+		modal("Email Confirmed", "Your email has been confirmed, you can now log in!")
+	};
+</script>
 
 </body>
 </html>

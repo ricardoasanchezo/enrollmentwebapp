@@ -1,11 +1,13 @@
-package com.ricardo.enrollmentwebapp.services;
+package com.ricardo.enrollmentwebapp.user;
 
 import com.ricardo.enrollmentwebapp.dto.ModalResponse;
-import com.ricardo.enrollmentwebapp.entities.MyUser;
 import com.ricardo.enrollmentwebapp.entities.PasswordToken;
 import com.ricardo.enrollmentwebapp.repositories.MyUserRepository;
+import com.ricardo.enrollmentwebapp.services.ConfirmationTokenService;
+import com.ricardo.enrollmentwebapp.services.EmailService;
+import com.ricardo.enrollmentwebapp.services.PasswordTokenService;
+import com.ricardo.enrollmentwebapp.services.StudentService;
 import com.ricardo.enrollmentwebapp.utils.InputValidator;
-import com.ricardo.enrollmentwebapp.utils.Role;
 import com.ricardo.enrollmentwebapp.entities.ConfirmationToken;
 import com.ricardo.enrollmentwebapp.entities.Student;
 import com.ricardo.enrollmentwebapp.dto.RegistrationRequest;
@@ -81,6 +83,7 @@ public class MyUserService implements UserDetailsService
         }
 
         MyUser newUser = new MyUser(
+                null,
                 request.username(),
                 passwordEncoder.encode(request.password()),
                 Role.USER,

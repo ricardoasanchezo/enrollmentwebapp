@@ -1,5 +1,6 @@
 package com.ricardo.enrollmentwebapp.entities;
 
+import com.ricardo.enrollmentwebapp.user.MyUser;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,7 +36,7 @@ public class PasswordToken
     @Column(nullable = false)
     private LocalDateTime expiresAt;
 
-    @Column(nullable = true)
+    // @Column(nullable = true)
     private LocalDateTime confirmedAt;
 
     @ManyToOne

@@ -16,32 +16,21 @@
 
 	--mobile-size-breakpoint: 800px;
 	--navbar-height: 70px;
+	--footer-height: 2.5rem;
 
 	--transition-time: 350ms;
-
-/*
-Light Colors
-Body Background Color: #f0f0f0
-Courses Background Color: #f1e9ce
-Distributive Courses Background color: #efe3ba
-*/
 }
 
 * {
 	margin: 0;
 	padding: 0;
 	font-family: 'Inter', sans-serif;
+	box-sizing: border-box;
 }
-
-/*body, header {*/
-/*	background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("../images/inter-bayamon-background.png");*/
-/*	background-position: center;*/
-/*	background-attachment: fixed;*/
-/*	background-size: cover;*/
-/*}*/
 
 body {
 	background-color: var(--light-primary);
+	min-height: 100vh;
 }
 
 /*=======NAVBAR==========================================================================================================*/
@@ -97,18 +86,17 @@ body {
 
 /*=======CONTENT==========================================================================================================*/
 
-#main {
+#page-container {
 	position: relative;
+	min-height: 100vh;
 	top: var(--navbar-height);
 }
 
 	#content {
-		margin: auto;
-		width: 95%;
-		max-width: 900px;
+		margin: 0 10% 0 10%;
+		/*min-height: 100vh;*/
+		padding-bottom: calc(2 * var(--footer-height));
 	}
-
-
 
 /*=======MODAL==========================================================================================================*/
 
@@ -161,12 +149,11 @@ body {
 
 /*=======FOOTER==========================================================================================================*/
 
-footer {
+#footer {
+	margin-top: 50px;
+	min-height: var(--footer-height);
 	background-color: lightgrey;
 	color: var(--dark-text-color);
-	font-size: 16px;
-	font-weight: bold;
-	margin: 30px 0 0 0;
 	padding: 30px;
 }
 

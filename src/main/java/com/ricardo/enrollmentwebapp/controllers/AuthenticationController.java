@@ -1,7 +1,7 @@
 package com.ricardo.enrollmentwebapp.controllers;
 
 import com.ricardo.enrollmentwebapp.dto.ModalResponse;
-import com.ricardo.enrollmentwebapp.services.MyUserService;
+import com.ricardo.enrollmentwebapp.user.MyUserService;
 import com.ricardo.enrollmentwebapp.dto.RegistrationRequest;
 import com.ricardo.enrollmentwebapp.dto.ResetRequest;
 import lombok.AllArgsConstructor;

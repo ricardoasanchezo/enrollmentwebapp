@@ -17,6 +17,7 @@ public class Major
     @Id
     @Column(length = 10)
     private String code;
+
     private String name;
 
     @ManyToMany(targetEntity = Course.class)
@@ -24,6 +25,8 @@ public class Major
 
     @ManyToMany(targetEntity = Course.class)
     private List<Course> distributiveRequirementCourses;
+
     private int distributiveCreditsRequirement;
+
     private int electiveCreditsRequirement;
 }

@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap');
+
+:root {
+    --course-input-height: 30px;
+    --course-node-height: 40px;
+}
+
+
+#node-template {
+    display: none;
+}
+
+.draggable-container {
+    background-color: lightgray;
+    padding: 1rem;
+}
+
+/*.draggable-container * {*/
+/*    max-height: var(--course-node-height);*/
+/*    min-height: var(--course-node-height);*/
+/*}*/
+
+.draggable-course-node {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: whitesmoke;
+    margin-bottom: 5px;
+    cursor: move;
+    padding-right: 10px;
+}
+
+.draggable-course-node.dragging {
+    opacity: .4;
+}
+
+.draggable-symbol {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px 0 10px;
+}
+
+.remove-node-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    max-height: var(--course-node-height);
+    min-height: var(--course-node-height);
+    max-width: var(--course-node-height);
+    min-width: var(--course-node-height);
+    color: red;
+    border: none;
+}
+
+.remove-node-button:hover {
+    background-color: red;
+    color: white;
+    transition: var(--transition-time);
+}
+
+.course {
+    min-width: 100px;
+    width: 100%;
+    font-size: 20px;
+    margin-left: 5px;
+    padding-left: 10px;
+    height: var(--course-node-height);
+    border: none;
+}
+
+.textarea {
+    min-width: 100px;
+    width: 100%;
+    min-height: 25px;
+    margin-left: 5px;
+    resize: none;
+    padding: 5px;
+    border: none;
+}
+
+.checkbox {
+    height: var(--course-input-height);
+    min-width: 30px;
+    margin: 0 5px 0 5px;
+}
+
+
+
+#add-node-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: lightgreen;
+    color: green;
+    max-width: 50px;
+    min-width: 50px;
+    max-height: 50px;
+    min-height: 50px;
+    border: none;
+}
+
+#add-node-button:hover {
+    background-color: darkgreen;
+    color: white;
+    transition: var(--transition-time);
+}

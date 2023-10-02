@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Build a new major</title>
+	<div th:replace="fragments/head :: head"></div>
+	<link rel="stylesheet" type="text/css" href="/style/major-builder-style.css" />
+	<script type="text/javascript" src="/script/major-builder-script.js" defer></script>
+</head>
+<body>
+
+<div id="modal">
+	<div id="modal-box">
+		<div id="modal-title"></div>
+		<div id="modal-message"></div>
+		<button id="modal-button">Ok</button>
+	</div>
+</div>
+
+<header id="header" th:insert="~{fragments/navbar :: navbar}"></header>
+
+<div id="page-container">
+	<div id="content">
+		
+		<h2 id="major-code"></h2>
+		<label for="major-name">Name</label>
+		<input id="major-name">
+		
+		<label for="major-dist-credits">Distributive Credits Requirement</label>
+		<input id="major-dist-credits">
+		
+		<label for="major-elect-credits">Elective Credits Requirement</label>
+		<input id="major-elect-credits">
+		
+		<div id="node-list" class="draggable-container">
+			
+			<div id="node-template" class="draggable-course-node" draggable="true">
+				<div class="draggable-symbol">
+					<span class="material-symbols-outlined">drag_indicator</span>
+				</div>
+				<button type="button" class="remove-node-button" onclick="removeCourseNode(this)">
+					<span class="material-icons" >close</span>
+				</button>
+				<input class="course" type="text" oninput="updateCourseNodeList()" placeholder="Course">
+				<textarea class="textarea" oninput="autoGrow(this); updateCourseNodeList();" placeholder="Hard Requirements"></textarea>
+				<textarea class="textarea" oninput="autoGrow(this); updateCourseNodeList();" placeholder="Soft Requirements"></textarea>
+				<textarea class="textarea" oninput="autoGrow(this)" placeholder="Special Requirements"></textarea>
+				<input class="checkbox" type="checkbox" id="isDistCourse">
+				<label for="isDistCourse">Distributive</label>
+			</div>
+			
+		</div>
+		
+		<button id="add-node-button" class="material-icons" onclick="addNewCourseNode()">add</button>
+		
+		<button onclick="updateMajor()">Save courses to major</button>
+		
+	</div>
+	
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

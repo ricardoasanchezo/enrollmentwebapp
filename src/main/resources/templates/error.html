@@ -9,10 +9,11 @@
 
 <header id="header" th:insert="~{fragments/navbar :: navbar}"></header>
 
-<div id="main">
+<div id="page-container">
 	<div id="content">
 		<h1>Oops! Something broke :c</h1>
 	</div>
+	<div th:replace="~{fragments/footer :: footer}"></div>
 </div>
 
 </body>

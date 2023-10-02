@@ -11,8 +11,10 @@
 
 <header id="header" th:insert="~{fragments/navbar :: navbar}"></header>
 
-<div id="main">
-	<div id="course-page-container">
+<div id="page-container">
+	<div id="content">
+	
+		<div id="course-page-container">
 		
 		<div id="student-info-container" sec:authorize="isAuthenticated()" style="grid-area: info">
 			<span class="student-info-label">Student ID</span>
@@ -87,9 +89,11 @@
 		
 	</div>
 	
-	<footer th:insert="~{fragments/footer :: footer}"></footer>
-
+	</div>
+	
 </div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>
 </html>

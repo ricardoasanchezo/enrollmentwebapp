@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>All Majors</title>
+	<div th:replace="fragments/head :: head"></div>
+</head>
+<body>
+<div id="page-container">
+	<div id="content">
+		
+		<ul id="major-list">
+		
+		</ul>
+	
+	</div>
+	
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+<script>
+	window.onload = async function()
+	{
+		let ul = document.getElementById("major-list");
+		const response = await fetch(domain + "/api/major/getAllCodeNames");
+		let allMajors = await response.json();
+		
+		for (let i = 0; i < allMajors.length; i++)
+		{
+			let li = document.createElement("li");
+			let a = document.createElement("a");
+			a.href = domain + "/admin/majors/" + allMajors[i].code;
+			a.innerText = allMajors[i].code + " - " + allMajors[i].name;
+			
+			li.appendChild(a);
+			ul.appendChild(li);
+		}
+	}
+</script>
+
+</body>
+</html>

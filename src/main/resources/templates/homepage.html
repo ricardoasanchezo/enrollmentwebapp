@@ -9,83 +9,18 @@
 
 <body>
 		
-	<header id="header" th:insert="~{fragments/navbar :: navbar}"></header>
+<header id="header" th:insert="~{fragments/navbar :: navbar}"></header>
 
-    <div id="main">
+    <div id="page-container">
 		<div id="content">
-
-            <h1>Welcome!</h1>
-
-            <p>Here, you will be able to register as an Inter Bayamon student and view your approved and remaining courses.</p>
-
-            <div id="feature-list">
-                <div class="feature-icon">
-                    <div class="material-icons">eco</div>
-                </div>
-                <div class="feature-text">
-                    <p class="feature-title">Courses</p>
-                    <p>You can view in detail all the required courses in your major, along with approved and remaining.</p>
-                </div>
-
-                <div class="feature-icon">
-                    <div class="material-icons">settings</div>
-                </div>
-                <div class="feature-text">
-                    <p class="feature-title">Enrollment</p>
-                    <p>You can choose between your remaining classes to generate an enrollment document.</p>
-                </div>
-
-                <div class="feature-icon">
-                    <div class="material-icons">masks</div>
-                </div>
-                <div class="feature-text">
-                    <p class="feature-title">Comments</p>
-                    <p>You can send bug reports, recommendations and other comments for the improvement of this service.</p>
-                </div>
-            </div>
-
-            <p id="pricing-text">Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
-
-            <div id="prices-container">
-                <a class="price-box" href="https://youtu.be/dQw4w9WgXcQ">
-                    <p class="price-box-title">Standard Bundle</p>
-                    <p class="price">$150</p>
-                    <ul class="price-box-list">
-                        <li>One 9" Signature Cake</li>
-                        <li>One 10" Fudge Brownie Trays</li>
-                        <li>One dozen Sorted Donuts</li>
-                        <li>1lb. Sorted Cookies</li>
-                    </ul>
-                    <p class="price-box-btn">Add to cart</p>
-                </a>
-                <a class="price-box" href="https://youtu.be/dQw4w9WgXcQ">
-                    <p class="price-box-title">Gold Bundle</p>
-                    <p class="price">$250</p>
-                    <ul class="price-box-list">
-                        <li>Three 9" Signature Cakes</li>
-                        <li>Two 10" Fudge Brownie Trays</li>
-                        <li>Two dozen Sorted Donuts</li>
-                        <li>2lb. Sorted Cookies</li>
-                    </ul>
-                    <p class="price-box-btn">Add to cart</p>
-                </a>
-                <a class="price-box" href="https://youtu.be/dQw4w9WgXcQ">
-                    <p class="price-box-title">Sweet Baker's Bundle</p>
-                    <p class="price">$400</p>
-                    <ul class="price-box-list">
-                        <li>Five 9" Signature Cakes</li>
-                        <li>Four 10" Fudge Brownie Trays</li>
-                        <li>Three dozen Sorted Donuts</li>
-                        <li>4lb. Sorted Cookies</li>
-                    </ul>
-                    <p class="price-box-btn">Add to cart</p>
-                </a>
-            </div>
+			
 			
         </div>
 		
-		<footer th:insert="~{fragments/footer :: footer}"></footer>
+		
     </div>
+	
+<div th:replace="~{fragments/footer :: footer}"></div>
 
-    </body>
+</body>
 </html>

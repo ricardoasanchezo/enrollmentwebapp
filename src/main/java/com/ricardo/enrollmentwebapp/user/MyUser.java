@@ -1,14 +1,11 @@
-package com.ricardo.enrollmentwebapp.entities;
+package com.ricardo.enrollmentwebapp.user;
 
-import com.ricardo.enrollmentwebapp.utils.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 
 
 @Data
@@ -21,7 +18,8 @@ import java.util.List;
 public class MyUser implements UserDetails
 {
     @Id
-    @Column(length = 12)
+    private Long id;
+    @Column(unique = true)
     private String username; // username has to be Student Id
     private String password;
     @Enumerated(EnumType.STRING)
@@ -31,7 +29,7 @@ public class MyUser implements UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return role.getAuthorities();
     }
 
     @Override

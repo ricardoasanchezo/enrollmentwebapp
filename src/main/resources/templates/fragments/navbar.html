@@ -10,6 +10,10 @@
     <nav id="nav-bar" th:fragment="navbar">
         <img src="/images/inter-logo.png" alt="Inter Logo" >
         <h1 id="navbar-title"><a class="nav-link" href="/homepage">Inter Bayamón</a></h1>
+		
+		<span sec:authorize="hasRole('ROLE_ADMIN')">
+			<a class="nav-link" href="/admin">Admin Menu</a>
+		</span>
         <a class="nav-link" href="/homepage">Home</a>
         <a class="nav-link" href="/student/courses">My Courses</a>
         <a class="nav-link" href="/student/enrollment">Enrollment</a>

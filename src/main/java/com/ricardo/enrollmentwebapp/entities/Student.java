@@ -1,13 +1,8 @@
 package com.ricardo.enrollmentwebapp.entities;
 
-import com.ricardo.enrollmentwebapp.dto.StudentCourseDetailedDto;
-import com.ricardo.enrollmentwebapp.entities.Major;
-import com.ricardo.enrollmentwebapp.entities.Course;
-import com.ricardo.enrollmentwebapp.services.CourseFilterService;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -26,6 +21,9 @@ public class Student
 
     @ManyToOne(targetEntity = Major.class)
     private Major major;
+
+    @ManyToOne(targetEntity = MajorImproved.class)
+    private MajorImproved majorImproved;
 
     @ManyToMany(targetEntity = Course.class)
     private List<Course> approvedCourses;

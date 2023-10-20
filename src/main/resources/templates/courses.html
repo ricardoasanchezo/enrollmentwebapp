@@ -39,7 +39,7 @@
 					<div th:text="${course.getCode()}" class="course-code"></div>
 					<div th:text="${course.getTitle()}" class="course-name"></div>
 				</div>
-				<span th:text="${course.getCreditCount()}" class="course-credit"></span>
+				<span th:text="${course.getCredits()}" class="course-credit"></span>
 			</div>
 		
 			<div th:each="course : ${remainingCoursesInMajor}" class="course-card">
@@ -50,11 +50,11 @@
 					<div th:text="${course.getCode()}" class="course-code"></div>
 					<div th:text="${course.getTitle()}" class="course-name"></div>
 				</div>
-				<span th:text="${course.getCreditCount()}" class="course-credit"></span>
+				<span th:text="${course.getCredits()}" class="course-credit"></span>
 			</div>
 		</div>
 		
-		<div id="distributive-course-container" style="grid-area: dist">
+		<div id="dist-course-container" style="grid-area: dist">
 			<h2>Distributive Courses</h2>
 			
 			<p>
@@ -72,7 +72,7 @@
 					<div th:text="${course.getCode()}" class="course-code"></div>
 					<div th:text="${course.getTitle()}" class="course-name"></div>
 				</div>
-				<span th:text="${course.getCreditCount()}" class="course-credit"></span>
+				<span th:text="${course.getCredits()}" class="course-credit"></span>
 			</div>
 			
 			<div th:each="course : ${remainingDistributiveCourses}" class="course-card">
@@ -83,7 +83,7 @@
 					<div th:text="${course.getCode()}" class="course-code"></div>
 					<div th:text="${course.getTitle()}" class="course-name"></div>
 				</div>
-				<span th:text="${course.getCreditCount()}" class="course-credit"></span>
+				<span th:text="${course.getCredits()}" class="course-credit"></span>
 			</div>
 		</div>
 		

@@ -18,8 +18,7 @@ public class CourseNode
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(unique = true)
-    private String code;
+    private String majorCode;
 
     @ManyToOne(targetEntity = Course.class)
     private Course course;

@@ -47,6 +47,13 @@ public class StudentController
         return "courses";
     }
 
+    @GetMapping("/progress")
+    public String progress()
+    {
+        return "student-progress";
+    }
+
+
     @GetMapping("/enrollment")
     public String enrollment(Model model)
     {

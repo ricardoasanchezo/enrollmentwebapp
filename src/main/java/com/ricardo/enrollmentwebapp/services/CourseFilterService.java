@@ -4,12 +4,10 @@ import com.ricardo.enrollmentwebapp.entities.Course;
 import com.ricardo.enrollmentwebapp.entities.Major;
 import com.ricardo.enrollmentwebapp.repositories.CourseRepository;
 import lombok.AllArgsConstructor;
-import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
@@ -82,7 +80,7 @@ public class CourseFilterService
         int approvedCredits = 0;
         for (Course approvedCourse: approvedCourses)
         {
-            approvedCredits += approvedCourse.getCreditCount();
+            approvedCredits += approvedCourse.getCredits();
         }
 
         if (approvedCredits >= major.getDistributiveCreditsRequirement())

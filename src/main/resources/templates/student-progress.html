@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<div th:replace="fragments/head :: head"></div>
+	<script src="/script/student-progress-script.js"></script>
+</head>
+<body>
+
+<header id="header" th:insert="~{fragments/navbar :: navbar}"></header>
+
+<div id="page-container">
+	<div id="content">
+		
+		<div id="course-page-container">
+			
+			<div id="student-info-container" style="grid-area: info">
+				<span class="student-info-label">Student ID</span>
+				<span class="student-info-answer" id="student-id"></span>
+				
+				<span class="student-info-label">Degree</span>
+				<span class="student-info-answer" id="major-name"></span>
+				
+				<span class="student-info-label">Distributive Credits Required</span>
+				<span class="student-info-answer" id="major-dist-credits"></span>
+				
+				<span class="student-info-label">Elective Credits Required</span>
+				<span class="student-info-answer" id="major-elect-credits"></span>
+			</div>
+			
+			<div id="main-course-container" style="grid-area: main">
+				
+				<div id="course-card-template" class="course-card">
+					<div class="course-icon">
+						<span class="material-icons">done</span>
+					</div>
+					<div>
+						<div class="course-code"></div>
+						<div class="course-name"></div>
+					</div>
+					<span class="course-credit"></span>
+				</div>
+				
+				<div id="main-done" class="main-course-container"></div>
+				<div id="main-pending" class="main-course-container"></div>
+				<div id="main-close" class="main-course-container"></div>
+				
+			</div>
+			
+			<div id="dist-course-container" style="grid-area: dist">
+				<h2>Distributive Courses</h2>
+				
+				<p>
+					Some majors require a different amount of distributive credits, and some majors don't require any distributive courses.
+					Your major requires a total of
+					<span style="font-weight: bold" id="major-dist-credits-inline">TO BE IMPLEMENTED</span>
+					distributive requirement credits.
+				</p>
+				
+				<div id="dist-done" class="dist-course-container"></div>
+				<div id="dist-pending" class="dist-course-container"></div>
+				<div id="dist-close" class="dist-course-container"></div>
+				
+			</div>
+		
+		</div>
+	
+	</div>
+
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

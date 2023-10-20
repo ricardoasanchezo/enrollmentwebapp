@@ -33,3 +33,17 @@ function endAnimation()
     button.disabled = false;
     button.innerHTML = "Register";
 }
+
+function startLoading(button)
+{
+    button.disabled = true;
+    button.backgroundColor = "black";
+    button.classList.add("rotation", "material-symbols-outlined");
+    button.textContent = "progress_activity";
+}
+
+function endLoading(button)
+{
+    button.disabled = false;
+    button.innerHTML = "Register";
+}

@@ -5,7 +5,7 @@ import java.util.List;
 public record MajorUpdateRequest(
         String code,
         String name,
-        List<CourseNodeShell> courseNodeShellList,
+        List<CourseNodeDto> courseNodeShellList,
         int distCredits,
         int electCredits
 )

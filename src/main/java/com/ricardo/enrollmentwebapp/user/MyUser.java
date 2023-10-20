@@ -18,7 +18,6 @@ import java.util.Collection;
 public class MyUser implements UserDetails
 {
     @Id
-    private Long id;
     @Column(unique = true)
     private String username; // username has to be Student Id
     private String password;

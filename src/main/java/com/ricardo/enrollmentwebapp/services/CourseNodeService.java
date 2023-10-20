@@ -1,6 +1,6 @@
 package com.ricardo.enrollmentwebapp.services;
 
-import com.ricardo.enrollmentwebapp.dto.CourseNodeShell;
+import com.ricardo.enrollmentwebapp.dto.CourseNodeDto;
 import com.ricardo.enrollmentwebapp.entities.Course;
 import com.ricardo.enrollmentwebapp.entities.CourseNode;
 import com.ricardo.enrollmentwebapp.repositories.CourseNodeRepository;
@@ -17,11 +17,9 @@ public class CourseNodeService
     private final CourseNodeRepository courseNodeRepository;
     private final CourseService courseService;
 
-    public CourseNode getCourseNodeFromShell(String majorCode, CourseNodeShell shell)
+    public CourseNode getCourseNodeFromShell(String majorCode, CourseNodeDto shell)
     {
-        String nodeCode = majorCode + "-" + shell.courseCode();
-
-        Optional<CourseNode> courseNode = courseNodeRepository.findCourseNodeByCode(nodeCode);
+        Optional<CourseNode> courseNode = courseNodeRepository.findByMajorCodeAndCourseCode(majorCode, shell.courseCode());
 
         if (courseNode.isPresent())
         {
@@ -35,7 +33,7 @@ public class CourseNodeService
 
             CourseNode newNode = new CourseNode(
                     null,
-                    nodeCode,
+                    majorCode,
                     course,
                     hardReqs,
                     softReqs,
@@ -50,8 +48,8 @@ public class CourseNodeService
         }
     }
 
-    public void save(CourseNode courseNode)
-    {
-        courseNodeRepository.save(courseNode);
-    }
+//    public void save(CourseNode courseNode)
+//    {
+//        courseNodeRepository.save(courseNode);
+//    }
 }

@@ -25,6 +25,22 @@ function checkCourseCodeMatch(element)
     toggleStyleOnInput(element, isValid, isEmpty);
 }
 
+function checkCourseCodeRepeat(element, codeList)
+{
+    let isValid = !codeList.includes(element.value);
+
+    toggleStyleOnInput(element, isValid, false);
+}
+
+function checkCourseCode(element, codeList)
+{
+    let isValid = allCourseCodes.includes(element.value) && !codeList.includes(element.value);
+
+    let isEmpty = (element.value == null || element.value === "");
+
+    toggleStyleOnInput(element, isValid, isEmpty);
+}
+
 function checkHardRequirementsMatch(element)
 {
     let reqs= element.value.split(",").map(code => { return code.trim(); })
@@ -73,10 +89,14 @@ function updateCourseNodeList()
     {
         let htmlNode = htmlNodeList[i].children;
 
+        // checkCourseCodeMatch(htmlNode[offset]);
+        // checkCourseCodeRepeat(htmlNode[offset], currentCourseCodes);
+
+        checkCourseCode(htmlNode[offset], currentCourseCodes);
+
         if (allCourseCodes.includes(htmlNode[offset].value))
             currentCourseCodes.push(htmlNode[offset].value);
 
-        checkCourseCodeMatch(htmlNode[offset]);
         checkHardRequirementsMatch(htmlNode[1 + offset]);
         checkSoftRequirementsMatch(htmlNode[2 + offset]);
 
@@ -142,7 +162,7 @@ window.onload = async function()
 
     let courseNodes = major.courseNodes;
 
-    courseNodes.sort(function(a, b){return a.index - b.index});
+    courseNodes.sort(function(a, b){return a.nodeIndex - b.nodeIndex});
 
     for (let i = 0; i < courseNodes.length; i++)
     {
@@ -165,7 +185,7 @@ window.onload = async function()
         nodeChildren[1 + offset].value = String(courseNodes[i].hardReqs.map(req => req.code));
         nodeChildren[2 + offset].value = String(courseNodes[i].softReqs.map(req => req.code));
         nodeChildren[3 + offset].value = courseNodes[i].specialReqs;
-        nodeChildren[4 + offset].checked = courseNodes[i].isDistCourse;
+        nodeChildren[4 + offset].checked = courseNodes[i].distCourse; //isDistCourse
 
         document.getElementById("node-list").appendChild(newNode);
     }
@@ -180,7 +200,7 @@ async function updateMajor()
 {
     updateCourseNodeList();
 
-    console.log(courseNodeList);
+    // console.log(courseNodeList);
 
     let majorUpdateRequest = {
             "code": document.getElementById("major-code").innerText,

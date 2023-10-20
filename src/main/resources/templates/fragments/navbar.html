@@ -2,27 +2,23 @@
 <html xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Navigation Bar</title>
-</head>
 <body>
     <nav id="nav-bar" th:fragment="navbar">
         <img src="/images/inter-logo.png" alt="Inter Logo" >
         <h1 id="navbar-title"><a class="nav-link" href="/homepage">Inter Bayamón</a></h1>
 		
-		<span sec:authorize="hasRole('ROLE_ADMIN')">
+		<th:block sec:authorize="hasRole('ADMIN')">
 			<a class="nav-link" href="/admin">Admin Menu</a>
-		</span>
+		</th:block>
         <a class="nav-link" href="/homepage">Home</a>
-        <a class="nav-link" href="/student/courses">My Courses</a>
+        <a class="nav-link" href="/student/progress">My Courses</a>
         <a class="nav-link" href="/student/enrollment">Enrollment</a>
-        <span sec:authorize="isAuthenticated()">
+        <th:block sec:authorize="isAuthenticated()">
             <a class="nav-link" href="/logout">Log Out</a>
-        </span>
-        <span sec:authorize="isAnonymous()">
+        </th:block>
+        <th:block sec:authorize="isAnonymous()">
             <a class="nav-link" href="/auth/login">Log In</a>
-        </span>
+        </th:block>
     </nav>
 </body>
 </html>

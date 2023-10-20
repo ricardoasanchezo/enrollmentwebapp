@@ -16,5 +16,5 @@ public class Course
     @Column(length = 10)
     private String code;
     private String title;
-    private int creditCount;
+    private int credits;
 }

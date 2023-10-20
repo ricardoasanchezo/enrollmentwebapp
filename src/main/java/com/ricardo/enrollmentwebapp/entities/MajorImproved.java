@@ -27,10 +27,10 @@ public class MajorImproved
 
     private int electCredits;
 
-    public List<String> getAllCourseCodes()
-    {
-        return courseNodes.stream().map(courseNode -> courseNode.getCourse().getCode()).toList();
-    }
+//    public List<String> getAllCourseCodes()
+//    {
+//        return courseNodes.stream().map(courseNode -> courseNode.getCourse().getCode()).toList();
+//    }
 
     public MajorCodeName toMajorDto()
     {

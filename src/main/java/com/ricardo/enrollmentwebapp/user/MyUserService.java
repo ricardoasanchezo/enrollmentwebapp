@@ -83,7 +83,6 @@ public class MyUserService implements UserDetailsService
         }
 
         MyUser newUser = new MyUser(
-                null,
                 request.username(),
                 passwordEncoder.encode(request.password()),
                 Role.USER,

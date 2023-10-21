@@ -22,9 +22,6 @@ public class Student
     @ManyToOne(targetEntity = Major.class)
     private Major major;
 
-    @ManyToOne(targetEntity = MajorImproved.class)
-    private MajorImproved majorImproved;
-
     @ManyToMany(targetEntity = Course.class)
     private List<Course> approvedCourses;
 }

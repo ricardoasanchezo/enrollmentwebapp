@@ -75,15 +75,15 @@ public class CourseFilterService
         }
     }
 
-    public void filterDistributiveCourses(Major major, List<Course> approvedCourses, List<Course> remainingCourses)
-    {
-        int approvedCredits = 0;
-        for (Course approvedCourse: approvedCourses)
-        {
-            approvedCredits += approvedCourse.getCredits();
-        }
-
-        if (approvedCredits >= major.getDistributiveCreditsRequirement())
-            remainingCourses.clear();
-    }
+//    public void filterDistributiveCourses(Major major, List<Course> approvedCourses, List<Course> remainingCourses)
+//    {
+//        int approvedCredits = 0;
+//        for (Course approvedCourse: approvedCourses)
+//        {
+//            approvedCredits += approvedCourse.getCredits();
+//        }
+//
+//        if (approvedCredits >= major.getDistributiveCreditsRequirement())
+//            remainingCourses.clear();
+//    }
 }

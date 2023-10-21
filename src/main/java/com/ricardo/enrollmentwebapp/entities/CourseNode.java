@@ -31,7 +31,7 @@ public class CourseNode
 
     private String specialReqs;
 
-    private boolean isDistCourse;
+    private Boolean isDistCourse;
 
-    private int nodeIndex;
+    private Integer nodeIndex;
 }

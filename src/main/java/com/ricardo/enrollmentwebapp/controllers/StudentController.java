@@ -28,24 +28,24 @@ public class StudentController
         return null;
     }
 
-    @GetMapping("/courses")
-    public String courses(Model model) throws Exception
-    {
-        Student student = studentService.findStudentById(getCurrentUsername()).get();
-        var studentDetailedCourses = studentService.getDetailedStudentCourses(student.getId());
-
-        model.addAttribute("allApprovedCourses", studentDetailedCourses.approvedCourses());
-        model.addAttribute("remainingCoursesInMajor", studentDetailedCourses.remainingCourses());
-        model.addAttribute("remainingDistributiveCourses", studentDetailedCourses.remainingDistributiveCourses());
-        model.addAttribute("approvedDistributiveCourses", studentDetailedCourses.approvedDistributiveCourses());
-
-        model.addAttribute("student", student);
-        model.addAttribute("studentID", student.getId());
-        model.addAttribute("major", student.getMajor());
-        // model.addAttribute("totalApprovedCredits", )
-
-        return "courses";
-    }
+//    @GetMapping("/courses")
+//    public String courses(Model model) throws Exception
+//    {
+//        Student student = studentService.findStudentById(getCurrentUsername()).get();
+//        var studentDetailedCourses = studentService.getDetailedStudentCourses(student.getId());
+//
+//        model.addAttribute("allApprovedCourses", studentDetailedCourses.approvedCourses());
+//        model.addAttribute("remainingCoursesInMajor", studentDetailedCourses.remainingCourses());
+//        model.addAttribute("remainingDistributiveCourses", studentDetailedCourses.remainingDistributiveCourses());
+//        model.addAttribute("approvedDistributiveCourses", studentDetailedCourses.approvedDistributiveCourses());
+//
+//        model.addAttribute("student", student);
+//        model.addAttribute("studentID", student.getId());
+//        model.addAttribute("major", student.getMajor());
+//        // model.addAttribute("totalApprovedCredits", )
+//
+//        return "courses";
+//    }
 
     @GetMapping("/progress")
     public String progress()

@@ -1,5 +1,5 @@
 package com.ricardo.enrollmentwebapp.entities;
-
+import com.ricardo.enrollmentwebapp.dto.MajorCodeName;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,18 +15,23 @@ import java.util.List;
 public class Major
 {
     @Id
-    @Column(length = 10)
-    private String code;
+    @Column(length = 20)
+    private String code; // Major code - year. Ex: 120-2019
 
     private String name;
 
-    @ManyToMany(targetEntity = Course.class)
-    private List<Course> courses; // one major has many courses
+    @ManyToMany(targetEntity = CourseNode.class)
+    private List<CourseNode> courseNodes;
 
-    @ManyToMany(targetEntity = Course.class)
-    private List<Course> distributiveRequirementCourses;
+    private Integer distCredits;
 
-    private int distributiveCreditsRequirement;
+    private Integer electCredits;
 
-    private int electiveCreditsRequirement;
+    public MajorCodeName toMajorDto()
+    {
+        return new MajorCodeName(
+                code,
+                name
+        );
+    }
 }

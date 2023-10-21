@@ -1,14 +1,18 @@
 package com.ricardo.enrollmentwebapp.dto;
 
+import lombok.Data;
+import lombok.Getter;
+
 import java.util.List;
 
-public record CourseNodeDto(
-        String courseCode,
-        List<String> hardReqsCodes,
-        List<String> softReqsCodes,
-        String specialReqs,
-        boolean isDistCourse,
-        int index
-)
+@Data
+@Getter
+public class CourseNodeDto
 {
+    private String courseCode;
+    private List<String> hardReqsCodes;
+    private List<String> softReqsCodes;
+    private String specialReqs;
+    private Boolean isDistCourse;
+    private Integer index;
 }

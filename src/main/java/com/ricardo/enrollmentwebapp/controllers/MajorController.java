@@ -2,8 +2,8 @@ package com.ricardo.enrollmentwebapp.controllers;
 
 import com.ricardo.enrollmentwebapp.dto.MajorCodeName;
 import com.ricardo.enrollmentwebapp.dto.MajorCreationRequest;
-import com.ricardo.enrollmentwebapp.entities.MajorImproved;
-import com.ricardo.enrollmentwebapp.services.MajorImprovedService;
+import com.ricardo.enrollmentwebapp.entities.Major;
+import com.ricardo.enrollmentwebapp.services.MajorService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,29 +14,23 @@ import java.util.List;
 @AllArgsConstructor
 public class MajorController
 {
-    private final MajorImprovedService majorImprovedService;
+    private final MajorService majorService;
 
     @GetMapping("/{code}")
-    public MajorImproved getMajor(@PathVariable String code)
+    public Major getMajor(@PathVariable String code)
     {
-        return majorImprovedService.findById(code);
+        return majorService.findById(code);
     }
 
     @GetMapping("/getAllCodeNames")
     public List<MajorCodeName> getMajorCodeNames()
     {
-        return majorImprovedService.getAllMajorCodeNames();
+        return majorService.getAllMajorCodeNames();
     }
 
     @PostMapping("/add")
     public void addMajor(@RequestBody MajorCreationRequest request)
     {
-        majorImprovedService.addMajor(request);
+        majorService.addMajor(request);
     }
-
-//    @PostMapping("{code}/addCourse")
-//    public void addCourse(@PathVariable String code, @RequestBody CourseNodeShell courseNode)
-//    {
-//        majorImprovedService.addCourseToMajor(code, courseNode);
-//    }
 }

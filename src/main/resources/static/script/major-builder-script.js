@@ -3,19 +3,6 @@ let courseNodeList;
 let currentCourseCodes = [];
 let offset = 2; // Number of elements before course input in course node
 
-class CourseNode
-{
-    constructor(courseCode, hardReqsCodes, softReqsCodes, specialReqs, isDistCourse, index)
-    {
-        this.courseCode = courseCode;
-        this.hardReqsCodes = hardReqsCodes;
-        this.softReqsCodes = softReqsCodes;
-        this.specialReqs = specialReqs;
-        this.isDistCourse = isDistCourse;
-        this.index = index;
-    }
-}
-
 function checkCourseCodeMatch(element)
 {
     let isValid = allCourseCodes.includes(element.value);
@@ -100,14 +87,14 @@ function updateCourseNodeList()
         checkHardRequirementsMatch(htmlNode[1 + offset]);
         checkSoftRequirementsMatch(htmlNode[2 + offset]);
 
-        let courseNode = new CourseNode(
-            htmlNode[offset].value,
-            htmlNode[1 + offset].value.split(",").map(code => { return code.trim(); }),
-            htmlNode[2 + offset].value.split(",").map(code => { return code.trim(); }),
-            htmlNode[3 + offset].value,
-            htmlNode[4 + offset].checked,
-            i
-        )
+        let courseNode = {};
+
+        courseNode.courseCode = htmlNode[offset].value;
+        courseNode.hardReqsCodes = htmlNode[1 + offset].value.split(",").map(code => { return code.trim(); });
+        courseNode.softReqsCodes = htmlNode[2 + offset].value.split(",").map(code => { return code.trim(); });
+        courseNode.specialReqs = htmlNode[3 + offset].value;
+        courseNode.isDistCourse = htmlNode[4 + offset].checked;
+        courseNode.index = i;
 
         courseNodeList.push(courseNode);
     }
@@ -185,7 +172,7 @@ window.onload = async function()
         nodeChildren[1 + offset].value = String(courseNodes[i].hardReqs.map(req => req.code));
         nodeChildren[2 + offset].value = String(courseNodes[i].softReqs.map(req => req.code));
         nodeChildren[3 + offset].value = courseNodes[i].specialReqs;
-        nodeChildren[4 + offset].checked = courseNodes[i].distCourse; //isDistCourse
+        nodeChildren[4 + offset].checked = courseNodes[i].isDistCourse; //isDistCourse
 
         document.getElementById("node-list").appendChild(newNode);
     }
@@ -254,3 +241,4 @@ function getDragAfterElement(container, y)
 
     }, { offset: Number.NEGATIVE_INFINITY }).element;
 }
+

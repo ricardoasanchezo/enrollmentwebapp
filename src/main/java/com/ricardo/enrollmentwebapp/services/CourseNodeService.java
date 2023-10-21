@@ -17,39 +17,30 @@ public class CourseNodeService
     private final CourseNodeRepository courseNodeRepository;
     private final CourseService courseService;
 
-    public CourseNode getCourseNodeFromShell(String majorCode, CourseNodeDto shell)
+    public CourseNode getCourseNodeFromDto(String majorCode, CourseNodeDto dto)
     {
-        Optional<CourseNode> courseNode = courseNodeRepository.findByMajorCodeAndCourseCode(majorCode, shell.courseCode());
+        Optional<CourseNode> courseNode = courseNodeRepository.findByMajorCodeAndCourseCode(majorCode, dto.getCourseCode());
 
         if (courseNode.isPresent())
         {
             return courseNode.get();
         }
-        else
-        {
-            Course course = courseService.getCourseByCode(shell.courseCode());
-            List<Course> hardReqs = courseService.getCoursesByCodes(shell.hardReqsCodes());
-            List<Course> softReqs = courseService.getCoursesByCodes(shell.softReqsCodes());
 
-            CourseNode newNode = new CourseNode(
-                    null,
-                    majorCode,
-                    course,
-                    hardReqs,
-                    softReqs,
-                    shell.specialReqs(),
-                    shell.isDistCourse(),
-                    shell.index()
-            );
+        Course course = courseService.getCourseByCode(dto.getCourseCode()).orElseThrow();
+        List<Course> hardReqs = courseService.getCoursesByCodes(dto.getHardReqsCodes());
+        List<Course> softReqs = courseService.getCoursesByCodes(dto.getSoftReqsCodes());
 
-            courseNodeRepository.save(newNode);
+        CourseNode newNode = new CourseNode(
+                null,
+                majorCode,
+                course,
+                hardReqs,
+                softReqs,
+                dto.getSpecialReqs(),
+                dto.getIsDistCourse(),
+                dto.getIndex()
+        );
 
-            return newNode;
-        }
+        return courseNodeRepository.save(newNode);
     }
-
-//    public void save(CourseNode courseNode)
-//    {
-//        courseNodeRepository.save(courseNode);
-//    }
 }

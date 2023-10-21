@@ -23,7 +23,7 @@ public class CourseController
     @GetMapping("/get")
     public Course getCourseByCode(@RequestParam String code)
     {
-        return courseService.getCourseByCode(code);
+        return courseService.getCourseByCode(code).orElseThrow();
     }
 
     @GetMapping("/getAllCodes")

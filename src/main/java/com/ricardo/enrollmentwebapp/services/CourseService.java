@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -18,9 +19,9 @@ public class CourseService
         courseRepository.save(course);
     }
 
-    public Course getCourseByCode(String code)
+    public Optional<Course> getCourseByCode(String code)
     {
-        return courseRepository.getCourseByCode(code).orElseThrow();
+        return courseRepository.getCourseByCode(code);
     }
 
     public Course updateCourse(Course course)

@@ -1,11 +1,13 @@
 package com.ricardo.enrollmentwebapp.entities;
 import com.ricardo.enrollmentwebapp.dto.MajorCodeName;
+import com.ricardo.enrollmentwebapp.dto.MajorDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -27,7 +29,18 @@ public class Major
 
     private Integer electCredits;
 
-    public MajorCodeName toMajorDto()
+    public MajorDto toDto()
+    {
+        return new MajorDto(
+                code,
+                name,
+                courseNodes.stream().map(CourseNode::toDto).collect(Collectors.toList()),
+                distCredits,
+                electCredits
+        );
+    }
+
+    public MajorCodeName toMajorCodeName()
     {
         return new MajorCodeName(
                 code,

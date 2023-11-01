@@ -2,7 +2,7 @@ package com.ricardo.enrollmentwebapp.services;
 
 import com.ricardo.enrollmentwebapp.dto.MajorCodeName;
 import com.ricardo.enrollmentwebapp.dto.MajorCreationRequest;
-import com.ricardo.enrollmentwebapp.dto.MajorUpdateRequest;
+import com.ricardo.enrollmentwebapp.dto.MajorDto;
 import com.ricardo.enrollmentwebapp.entities.CourseNode;
 import com.ricardo.enrollmentwebapp.entities.Major;
 import com.ricardo.enrollmentwebapp.repositories.MajorRepository;
@@ -28,7 +28,7 @@ public class MajorService
 
     public List<MajorCodeName> getAllMajorCodeNames()
     {
-        return majorRepository.findAll().stream().map(Major::toMajorDto).toList();
+        return majorRepository.findAll().stream().map(Major::toMajorCodeName).toList();
     }
 
     public void addMajor(MajorCreationRequest request)
@@ -52,12 +52,17 @@ public class MajorService
         majorRepository.save(major);
     }
 
-    public void updateMajor(MajorUpdateRequest request)
+    public void updateMajor(MajorDto majorDto)
     {
-        Major major = majorRepository.findById(request.getCode()).orElseThrow();
+        Major major = majorRepository.findById(majorDto.getCode()).orElseThrow();
 
-        List<CourseNode> newNodes = request.getCourseNodeDtoList()
-                .stream().map(dto -> courseNodeService.getCourseNodeFromDto(request.getCode(), dto)).collect(Collectors.toList());
+        major.setName(majorDto.getName());
+        major.setDistCredits(majorDto.getDistCredits());
+        major.setElectCredits(majorDto.getElectCredits());
+
+        List<CourseNode> newNodes = majorDto.getCourseNodes().stream()
+                .map(dto -> courseNodeService.getCourseNodeFromDto(majorDto.getCode(), dto))
+                .collect(Collectors.toList());
 
         major.setCourseNodes(newNodes);
 

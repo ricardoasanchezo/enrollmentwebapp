@@ -1,6 +1,6 @@
 package com.ricardo.enrollmentwebapp.controllers;
 
-import com.ricardo.enrollmentwebapp.dto.MajorUpdateRequest;
+import com.ricardo.enrollmentwebapp.dto.MajorDto;
 import com.ricardo.enrollmentwebapp.services.MajorService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,8 +18,8 @@ public class AdminApiController
 
     @PutMapping("/major/{code}/update")
     @PreAuthorize("hasAuthority('admin:update')")
-    public void updateMajor(@RequestBody MajorUpdateRequest majorUpdateRequest)
+    public void updateMajor(@RequestBody MajorDto majorDto)
     {
-        majorService.updateMajor(majorUpdateRequest);
+        majorService.updateMajor(majorDto);
     }
 }

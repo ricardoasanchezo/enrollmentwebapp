@@ -2,7 +2,7 @@ package com.ricardo.enrollmentwebapp.controllers;
 
 import com.ricardo.enrollmentwebapp.dto.MajorCodeName;
 import com.ricardo.enrollmentwebapp.dto.MajorCreationRequest;
-import com.ricardo.enrollmentwebapp.entities.Major;
+import com.ricardo.enrollmentwebapp.dto.MajorDto;
 import com.ricardo.enrollmentwebapp.services.MajorService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +16,16 @@ public class MajorController
 {
     private final MajorService majorService;
 
+//    @GetMapping("/{code}")
+//    public Major getMajor(@PathVariable String code)
+//    {
+//        return majorService.findById(code);
+//    }
+
     @GetMapping("/{code}")
-    public Major getMajor(@PathVariable String code)
+    public MajorDto getMajor(@PathVariable String code)
     {
-        return majorService.findById(code);
+        return majorService.findById(code).toDto();
     }
 
     @GetMapping("/getAllCodeNames")

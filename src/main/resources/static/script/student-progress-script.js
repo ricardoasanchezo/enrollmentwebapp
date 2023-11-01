@@ -12,13 +12,13 @@ window.onload = async function buildList()
     let student = await studentResponse.json();
 
     let approvedCourseCodes = student.approvedCourses.map(course => {return course.code});
-    let majorCourseNodes = student.majorImproved.courseNodes;
+    let majorCourseNodes = student.major.courseNodes;
 
     document.getElementById("student-id").innerText = student.id;
-    document.getElementById("major-name").innerText = student.majorImproved.name;
-    document.getElementById("major-dist-credits").innerText = student.majorImproved.distCredits;
-    document.getElementById("major-elect-credits").innerText = student.majorImproved.electCredits;
-    document.getElementById("major-dist-credits-inline").innerText = student.majorImproved.distCredits;
+    document.getElementById("major-name").innerText = student.major.name;
+    document.getElementById("major-dist-credits").innerText = student.major.distCredits;
+    document.getElementById("major-elect-credits").innerText = student.major.electCredits;
+    document.getElementById("major-dist-credits-inline").innerText = student.major.distCredits;
 
     majorCourseNodes.forEach(courseNode =>
     {
@@ -57,7 +57,7 @@ window.onload = async function buildList()
 
         htmlCourseCard.classList.add(courseState);
 
-        if (courseNode.distCourse)
+        if (courseNode.isDistCourse)
         {
             document.getElementById("dist-" + courseState).appendChild(htmlCourseCard);
         }

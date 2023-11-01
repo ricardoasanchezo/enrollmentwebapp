@@ -1,104 +1,234 @@
-`
-<div class="draggable-course-node" draggable="true">
-    <div class="draggable-symbol">
-        <span class="material-symbols-outlined">drag_indicator</span>
-    </div>
-    <button type="button" class="remove-node-button" onclick="removeCourseNode(this)">
-        <span class="material-icons" >close</span>
-    </button>
-    <input class="course" type="text" oninput="updateCourseNodeList()" placeholder="Course">
-    <textarea class="textarea" oninput="autoGrow(this); updateCourseNodeList();" placeholder="Hard Requirements"></textarea>
-    <textarea class="textarea" oninput="autoGrow(this); updateCourseNodeList();" placeholder="Soft Requirements"></textarea>
-    <textarea class="textarea" oninput="autoGrow(this)" placeholder="Special Requirements"></textarea>
-    <input class="checkbox" type="checkbox" id="isDistCourse">
-    <label for="isDistCourse">Distributive</label>
-</div>
-`
+const courseNodeTemplate = document.createElement('template');
+courseNodeTemplate.innerHTML = `
+<style>
+    :host * {
+        box-sizing: border-box;
+        border: none;
+        font-size: 1rem;
+        min-height: 2rem;
+    }
 
-class CourseNode extends HTMLDivElement
+    :host {
+        background-color: transparent;
+        display: grid;
+        grid-template-columns: 30px 30px auto 30px 1fr 1fr 2fr 30px;
+        grid-gap: 10px;
+        /*padding: 5px;*/
+        align-items: center;
+        justify-items: center;
+        width: fit-content;
+    }
+    
+    #remove-node-button {
+        min-width: 30px;
+        background-color: red;
+        color: white;
+    }
+    
+    #remove-node-button:hover {
+        background-color: darkred;
+    }
+    
+    textarea {
+        resize: none;
+        width: 100%;
+    }
+    
+    #is-dist-course {
+        min-height: 25px;
+        min-width: 25px;
+        border-radius: 50%;
+    }
+    
+    .empty {
+        color: black;
+        background-color: white;
+    }
+    
+    .ok {
+        color: darkgreen;
+        background-color: lightgreen;
+    }
+    
+    .error {
+        color: darkred;
+        background-color: lightpink;
+    }
+    
+</style>
+
+<img src="/images/drag_indicator.svg" alt="drag" style="cursor: move">
+<button type="button" id="remove-node-button">X</button>
+<input id="course-code" type="text" size="10">
+<select>
+    <option value="A">A</option>
+    <option value="B">B</option>
+    <option value="C">C</option>
+    <option value="D">D</option>
+    <option value="F">F</option>
+</select>
+<input id="hard-reqs">
+<input id="soft-reqs">
+<textarea id="special-reqs"></textarea>
+<input id="is-dist-course" type="checkbox">
+`;
+
+class CourseNode extends HTMLElement
 {
-    courseInput;
-    hardReqsTextarea;
-    softReqsTextarea;
+    courseCodeInput;
+    passingGradeSelect;
+    hardReqsInput;
+    softReqsInput;
     specialReqsTextarea;
-    distCheckbox;
-    nodeIndex;
+    distCourseCheckbox;
 
-    constructor(courseCode, hardReqsCodes, softReqsCodes, specialReqs, isDistCourse, nodeIndex)
+    constructor(
+        container,
+        courseCode = '',
+        passingGrade = 'C',
+        hardReqs = '',
+        softReqs = '',
+        specialReqs = '',
+        isDistCourse = false,
+        nodeIndex = 0)
     {
         super();
 
-        this.className = "draggable-course-node";
+        this.attachShadow({mode: 'open'});
+        this.shadowRoot.appendChild(courseNodeTemplate.content.cloneNode(true));
+
+        this.shadowRoot.querySelector('#remove-node-button').addEventListener('click', () => container.removeCourseNode(this));
+
+        this.courseCodeInput = this.shadowRoot.querySelector('#course-code');
+        this.courseCodeInput.value = courseCode;
+
+        this.passingGradeSelect = this.shadowRoot.querySelector('select');
+        this.passingGradeSelect.value = passingGrade;
+
+        this.hardReqsInput = this.shadowRoot.querySelector('#hard-reqs');
+        this.hardReqsInput.value = hardReqs;
+
+        this.softReqsInput = this.shadowRoot.querySelector('#soft-reqs');
+        this.softReqsInput.value = softReqs;
+
+        this.specialReqsTextarea = this.shadowRoot.querySelector('#special-reqs');
+        this.specialReqsTextarea.value = specialReqs;
+
+        this.distCourseCheckbox = this.shadowRoot.querySelector('#is-dist-course');
+        this.distCourseCheckbox.checked = isDistCourse;
+
         this.draggable = true;
 
-        this.courseInput = new CourseCodeInput(courseCode);
-        this.appendChild(this.courseInput);
-
-        this.hardReqsTextarea = new ReqsTextarea(hardReqsCodes);
-        this.appendChild(this.hardReqsTextarea);
-
-        this.softReqsTextarea = new ReqsTextarea(softReqsCodes);
-        this.appendChild(this.softReqsTextarea);
-
-        this.specialReqsTextarea = document.createElement("textarea");
-        this.specialReqsTextarea.value = specialReqs;
-        this.appendChild(this.specialReqsTextarea);
-
-        this.distCheckbox = new DistCourseCheckbox(isDistCourse);
-        this.appendChild(this.distCheckbox);
-
-        this.index = nodeIndex;
+        this.addEventListener("dragstart",()=>
+        {
+            this.classList.add('dragging');
+        });
+        this.addEventListener("dragend",()=>
+        {
+            this.classList.remove('dragging');
+        });
     }
 
-    getAsObject()
+    toDto(index = 0)
     {
-        let courseNode = {
-            "courseCode": this.courseInput.value,
-            "hardReqsCodes": this.hardReqsTextarea.getAsArray(),
-            "softReqsCodes": this.softReqsTextarea.getAsArray(),
-            "specialReqs": this.specialReqsTextarea.value,
-            "isDistCourse": this.distCheckbox.checked,
-            "index": this.index,
+        // This should return an object like the CourseNodeDto
+        return {
+            "code": this.getCourseCode(),
+            "passingGrade": this.getPassingGrade(),
+            "hardReqs": this.getHardReqs(),
+            "softReqs": this.getSoftReqs(),
+            "specialReqs": this.getSpecialReqs(),
+            "isDistCourse": this.getIsDistCourse(),
+            "nodeIndex": index
         };
     }
-}
 
-class CourseCodeInput extends HTMLInputElement
-{
-    constructor(value)
+    validateCourseCode(allCodes, currentCodes)
     {
-        super();
-        this.type = "text";
-        this.value = (value === null) ? "" : value;
+        let code = this.getCourseCode();
+
+        let isValid = allCodes.includes(code) && !currentCodes.includes(code);
+
+        this.applyStyle(this.courseCodeInput, isValid ? 'ok' : 'error');
+
+        return isValid;
+    }
+
+    validateHardReqs(currentCodes)
+    {
+        let reqs = this.getHardReqs();
+
+        if (reqs.length === 0)
+        {
+            this.applyStyle(this.hardReqsInput, 'empty');
+            return true;
+        }
+
+        let isValid = reqs.every(req => currentCodes.includes(req));
+
+        this.applyStyle(this.hardReqsInput, isValid ? 'ok' : 'error');
+
+        return isValid;
+    }
+
+    validateSoftReqs(allCodes, currentCodes)
+    {
+        let reqs = this.getSoftReqs();
+
+        if (reqs.length === 0)
+        {
+            this.applyStyle(this.softReqsInput, 'empty');
+            return true;
+        }
+
+        let isValid =
+            reqs.length > 1 &&
+            reqs.some(req => currentCodes.includes(req)) &&
+            reqs.every(req => allCodes.includes(req));
+
+        this.applyStyle(this.softReqsInput, isValid ? 'ok' : 'error');
+
+        return isValid;
+    }
+
+    getCourseCode()
+    {
+        return this.courseCodeInput.value.trim();
+    }
+
+    getPassingGrade()
+    {
+        return this.passingGradeSelect.value;
+    }
+
+    getHardReqs()
+    {
+        let reqArray = this.hardReqsInput.value.split(",").map(code => { return code.trim(); });
+        return (reqArray[0] === "") ? [] : reqArray;
+    }
+
+    getSoftReqs()
+    {
+        let reqArray = this.softReqsInput.value.split(",").map(code => {
+            return code.trim();
+        });
+        return (reqArray[0] === "") ? [] : reqArray;
+    }
+
+    getSpecialReqs()
+    {
+        return this.specialReqsTextarea.value;
+    }
+
+    getIsDistCourse()
+    {
+        return this.distCourseCheckbox.checked;
+    }
+
+    applyStyle(element, className)
+    {
+        element.className = className;
     }
 }
 
-class ReqsTextarea extends HTMLTextAreaElement
-{
-    constructor(value)
-    {
-        super();
-        this.value = (value === null) ? "" : value;
-    }
-
-    getAsArray()
-    {
-        let reqs= this.value.split(",").map(code => { return code.trim(); });
-        return (reqs[0] === "") ? [] : reqs;
-    }
-}
-
-class DistCourseCheckbox extends HTMLInputElement
-{
-    constructor(checked)
-    {
-        super();
-        this.type = "checkbox";
-        this.checked = checked;
-    }
-}
-
-customElements.define("course-node", CourseNode, { extends: "div" });
-customElements.define("course-code-input", CourseCodeInput, { extends: "input" });
-customElements.define("reqs-textarea", ReqsTextarea, { extends: "textarea" });
-customElements.define("dist-course-checkbox", DistCourseCheckbox, { extends: "input" });
+window.customElements.define('course-node', CourseNode);

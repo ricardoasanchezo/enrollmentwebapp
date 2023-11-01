@@ -1,99 +1,99 @@
-<!DOCTYPE HTML>
-<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en"
-	  xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:th="http://www.thymeleaf.org">
-<head>
-	<title>Your courses</title>
-	<div th:replace="fragments/head :: head"></div>
-</head>
+<!--<!DOCTYPE HTML>-->
+<!--<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en"-->
+<!--	  xmlns="http://www.w3.org/1999/xhtml"-->
+<!--	  xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--	<title>Your courses</title>-->
+<!--	<div th:replace="fragments/head :: head"></div>-->
+<!--</head>-->
 
-<body>
+<!--<body>-->
 
-<header id="header" th:insert="~{fragments/navbar :: navbar}"></header>
+<!--<header id="header" th:insert="~{fragments/navbar :: navbar}"></header>-->
 
-<div id="page-container">
-	<div id="content">
-	
-		<div id="course-page-container">
-		
-		<div id="student-info-container" sec:authorize="isAuthenticated()" style="grid-area: info">
-			<span class="student-info-label">Student ID</span>
-			<span class="student-info-answer" th:text="${student.getId()}"></span>
-			
-			<span class="student-info-label">Degree</span>
-			<span class="student-info-answer" th:text="${student.getMajor().getName()}"></span>
-			
-			<span class="student-info-label">Distributive Credits Required</span>
-			<span class="student-info-answer" th:text="${student.getMajor().getDistributiveCreditsRequirement()}"></span>
-			
-			<span class="student-info-label">Elective Credits Required</span>
-			<span class="student-info-answer" th:text="${student.getMajor().getElectiveCreditsRequirement()}"></span>
-		</div>
-		
-		<div id="main-course-container" style="grid-area: main">
-			<div th:each="course : ${allApprovedCourses}" class="course-card">
-				<div class="course-icon" style="background-color: green">
-					<span class="material-icons">done</span>
-				</div>
-				<div>
-					<div th:text="${course.getCode()}" class="course-code"></div>
-					<div th:text="${course.getTitle()}" class="course-name"></div>
-				</div>
-				<span th:text="${course.getCredits()}" class="course-credit"></span>
-			</div>
-		
-			<div th:each="course : ${remainingCoursesInMajor}" class="course-card">
-				<div class="course-icon" style="background-color: red">
-					<span class="material-icons">close</span>
-				</div>
-				<div>
-					<div th:text="${course.getCode()}" class="course-code"></div>
-					<div th:text="${course.getTitle()}" class="course-name"></div>
-				</div>
-				<span th:text="${course.getCredits()}" class="course-credit"></span>
-			</div>
-		</div>
-		
-		<div id="dist-course-container" style="grid-area: dist">
-			<h2>Distributive Courses</h2>
-			
-			<p>
-				Some majors require a different amount of distributive credits, and some majors don't require any distributive courses.
-				Your major requires a total of
-				<span style="font-weight: bold" th:text="${student.getMajor().getDistributiveCreditsRequirement()}"></span>
-				distributive requirement credits.
-			</p>
-			
-			<div th:each="course : ${approvedDistributiveCourses}" class="course-card">
-				<div class="course-icon" style="background-color: green">
-					<span class="material-icons">done</span>
-				</div>
-				<div>
-					<div th:text="${course.getCode()}" class="course-code"></div>
-					<div th:text="${course.getTitle()}" class="course-name"></div>
-				</div>
-				<span th:text="${course.getCredits()}" class="course-credit"></span>
-			</div>
-			
-			<div th:each="course : ${remainingDistributiveCourses}" class="course-card">
-				<div class="course-icon" style="background-color: red">
-					<span class="material-icons">close</span>
-				</div>
-				<div>
-					<div th:text="${course.getCode()}" class="course-code"></div>
-					<div th:text="${course.getTitle()}" class="course-name"></div>
-				</div>
-				<span th:text="${course.getCredits()}" class="course-credit"></span>
-			</div>
-		</div>
-		
-	</div>
-	
-	</div>
-	
-</div>
+<!--<div id="page-container">-->
+<!--	<div id="content">-->
+<!--	-->
+<!--		<div id="course-page-container">-->
+<!--		-->
+<!--		<div id="student-info-container" sec:authorize="isAuthenticated()" style="grid-area: info">-->
+<!--			<span class="student-info-label">Student ID</span>-->
+<!--			<span class="student-info-answer" th:text="${student.getId()}"></span>-->
+<!--			-->
+<!--			<span class="student-info-label">Degree</span>-->
+<!--			<span class="student-info-answer" th:text="${student.getMajor().getName()}"></span>-->
+<!--			-->
+<!--			<span class="student-info-label">Distributive Credits Required</span>-->
+<!--			<span class="student-info-answer" th:text="${student.getMajor().getDistributiveCreditsRequirement()}"></span>-->
+<!--			-->
+<!--			<span class="student-info-label">Elective Credits Required</span>-->
+<!--			<span class="student-info-answer" th:text="${student.getMajor().getElectiveCreditsRequirement()}"></span>-->
+<!--		</div>-->
+<!--		-->
+<!--		<div id="main-course-container" style="grid-area: main">-->
+<!--			<div th:each="course : ${allApprovedCourses}" class="course-card">-->
+<!--				<div class="course-icon" style="background-color: green">-->
+<!--					<span class="material-icons">done</span>-->
+<!--				</div>-->
+<!--				<div>-->
+<!--					<div th:text="${course.getCode()}" class="course-code"></div>-->
+<!--					<div th:text="${course.getTitle()}" class="course-name"></div>-->
+<!--				</div>-->
+<!--				<span th:text="${course.getCredits()}" class="course-credit"></span>-->
+<!--			</div>-->
+<!--		-->
+<!--			<div th:each="course : ${remainingCoursesInMajor}" class="course-card">-->
+<!--				<div class="course-icon" style="background-color: red">-->
+<!--					<span class="material-icons">close</span>-->
+<!--				</div>-->
+<!--				<div>-->
+<!--					<div th:text="${course.getCode()}" class="course-code"></div>-->
+<!--					<div th:text="${course.getTitle()}" class="course-name"></div>-->
+<!--				</div>-->
+<!--				<span th:text="${course.getCredits()}" class="course-credit"></span>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--		-->
+<!--		<div id="dist-course-container" style="grid-area: dist">-->
+<!--			<h2>Distributive Courses</h2>-->
+<!--			-->
+<!--			<p>-->
+<!--				Some majors require a different amount of distributive credits, and some majors don't require any distributive courses.-->
+<!--				Your major requires a total of-->
+<!--				<span style="font-weight: bold" th:text="${student.getMajor().getDistributiveCreditsRequirement()}"></span>-->
+<!--				distributive requirement credits.-->
+<!--			</p>-->
+<!--			-->
+<!--			<div th:each="course : ${approvedDistributiveCourses}" class="course-card">-->
+<!--				<div class="course-icon" style="background-color: green">-->
+<!--					<span class="material-icons">done</span>-->
+<!--				</div>-->
+<!--				<div>-->
+<!--					<div th:text="${course.getCode()}" class="course-code"></div>-->
+<!--					<div th:text="${course.getTitle()}" class="course-name"></div>-->
+<!--				</div>-->
+<!--				<span th:text="${course.getCredits()}" class="course-credit"></span>-->
+<!--			</div>-->
+<!--			-->
+<!--			<div th:each="course : ${remainingDistributiveCourses}" class="course-card">-->
+<!--				<div class="course-icon" style="background-color: red">-->
+<!--					<span class="material-icons">close</span>-->
+<!--				</div>-->
+<!--				<div>-->
+<!--					<div th:text="${course.getCode()}" class="course-code"></div>-->
+<!--					<div th:text="${course.getTitle()}" class="course-name"></div>-->
+<!--				</div>-->
+<!--				<span th:text="${course.getCredits()}" class="course-credit"></span>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--		-->
+<!--	</div>-->
+<!--	-->
+<!--	</div>-->
+<!--	-->
+<!--</div>-->
 
-<div th:replace="~{fragments/footer :: footer}"></div>
+<!--<div th:replace="~{fragments/footer :: footer}"></div>-->
 
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->

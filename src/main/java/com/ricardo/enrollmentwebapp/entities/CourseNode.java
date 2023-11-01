@@ -1,5 +1,6 @@
 package com.ricardo.enrollmentwebapp.entities;
 
+import com.ricardo.enrollmentwebapp.dto.CourseNodeDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,13 +16,15 @@ import java.util.List;
 public class CourseNode
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String majorCode;
 
     @ManyToOne(targetEntity = Course.class)
     private Course course;
+
+    private Character passingGrade;
 
     @ManyToMany(targetEntity = Course.class)
     private List<Course> hardReqs;
@@ -34,4 +37,17 @@ public class CourseNode
     private Boolean isDistCourse;
 
     private Integer nodeIndex;
+
+    public CourseNodeDto toDto()
+    {
+        return new CourseNodeDto(
+                course.getCode(),
+                passingGrade,
+                hardReqs.stream().map(Course::getCode).toList(),
+                softReqs.stream().map(Course::getCode).toList(),
+                specialReqs,
+                isDistCourse,
+                nodeIndex
+        );
+    }
 }

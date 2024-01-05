@@ -41,37 +41,18 @@
     content: ":";
 }
 
-.student-info-answer {
-    font-weight: bold;
-}
-
 #main-course-container {
-    /*display: grid;*/
-    /*grid-gap: var(--grid-gap);*/
-    /*grid-template-columns: repeat(2, 1fr);*/
 }
 
-.main-course-container {
-    display: grid;
-    /*grid-gap: var(--grid-gap);*/
-    grid-template-columns: repeat(2, 1fr);
+.course-card-container {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 #dist-course-container {
-    /*display: grid;*/
-    /*grid-gap: var(--grid-gap);*/
-    /*grid-template-columns: repeat(1, 1fr);*/
-    /*align-content: start;*/
     margin-left: 20px;
     padding: 20px;
     background-color: var(--light-tertiary);
-}
-
-.dist-course-container {
-    display: grid;
-    /*grid-gap: var(--grid-gap);*/
-    grid-template-columns: repeat(1, 1fr);
-    align-content: start;
 }
 
 #dist-course-container h2 {
@@ -87,73 +68,3 @@
 #course-card-template {
     display: none;
 }
-
-.course-card {
-    display: flex;
-    flex-direction: row;
-    background-color: whitesmoke;
-    color: var(--dark-text-color);
-    height: 60px;
-    max-height: 60px;
-    width: var(--course-card-width);
-    max-width: var(--course-card-width);
-    font-size: 15px;
-    margin: 5px;
-
-    box-shadow: 0 4px 4px -4px #222
-}
-
-.course-icon {
-    color: var(--light-text-color);
-    min-width: 60px;
-    max-width: 60px;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.course-code {
-    width: 100%;
-    text-align: left;
-    font-weight: bold;
-    margin: 10px 0 5px 10px ;
-}
-
-.course-name {
-    width: 100%;
-    text-align: left;
-    font-style: italic;
-    font-size: 12px;
-    margin-left: 10px ;
-}
-
-.course-credit {
-    font-size: 20px;
-    min-width: 60px;
-    max-width: 60px;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: auto;
-}
-
-/*Approved classes*/
-.done .course-icon
-{
-    background-color: green;
-}
-
-/*Blocked classes*/
-.close .course-icon
-{
-    background-color: red;
-}
-
-/*Available classes*/
-.pending .course-icon
-{
-    background-color: darkgrey;
-}
-

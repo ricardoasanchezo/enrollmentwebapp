@@ -170,3 +170,21 @@ body {
 	margin: auto;
 	color: white;
 }
+
+/*=======UTILS==========================================================================================================*/
+
+.bold {
+	font-weight: bold;
+}
+
+.flex-column {
+	display: flex;
+	flex-direction: column;
+	grid-gap: 10px;
+}
+
+.flex-row-wrap {
+	display: flex;
+	flex-wrap: wrap;
+	grid-gap: 10px;
+}

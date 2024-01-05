@@ -57,7 +57,7 @@ courseNodeTemplate.innerHTML = `
     
 </style>
 
-<img src="/images/drag_indicator.svg" alt="drag" style="cursor: move">
+<img src="/images/icons/drag_indicator.svg" alt="drag" style="cursor: move">
 <button type="button" id="remove-node-button">X</button>
 <input id="course-code" type="text" size="10">
 <select>

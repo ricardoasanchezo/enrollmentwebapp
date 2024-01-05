@@ -1,9 +1,3 @@
-const state = {
-    APPROVED: "done",
-    BLOCKED: "close",
-    PENDING: "pending"
-}
-
 window.onload = async function buildList()
 {
     let url = domain + "/api/student/get";
@@ -20,16 +14,18 @@ window.onload = async function buildList()
     document.getElementById("major-elect-credits").innerText = student.major.electCredits;
     document.getElementById("major-dist-credits-inline").innerText = student.major.distCredits;
 
+    let courseCardMap = new Map();
+
     majorCourseNodes.forEach(courseNode =>
     {
         let code = courseNode.course.code;
         let title= courseNode.course.title;
         let credits = courseNode.course.credits;
 
-        let courseState;
+        let state;
         if (approvedCourseCodes.includes(code))
         {
-            courseState = state.APPROVED;
+            state = 'APPROVED';
         }
         else if (
             // approved courses contains all hard requirements
@@ -40,41 +36,50 @@ window.onload = async function buildList()
             courseNode.hardReqs.length === 0 && courseNode.softReqs.length === 0
         )
         {
-            courseState = state.PENDING;
+            state = 'PENDING';
         }
         else
         {
-            courseState = state.BLOCKED;
+            state = 'BLOCKED';
         }
 
-        let htmlCourseCard = document.getElementById("course-card-template").cloneNode(true);
-        htmlCourseCard.removeAttribute("id");
+        let isDistCourse = courseNode.isDistCourse;
 
-        htmlCourseCard.children[0].children[0].innerText = courseState;
-        htmlCourseCard.children[1].children[0].innerText = code;
-        htmlCourseCard.children[1].children[1].innerText = title;
-        htmlCourseCard.children[2].innerText = credits;
+        let courseCard = new CourseCard(code, title, credits, state, isDistCourse);
 
-        htmlCourseCard.classList.add(courseState);
-
-        if (courseNode.isDistCourse)
-        {
-            document.getElementById("dist-" + courseState).appendChild(htmlCourseCard);
-        }
-        else
-        {
-            document.getElementById("main-" + courseState).appendChild(htmlCourseCard);
-        }
+        courseCardMap.set(code, courseCard);
     });
+
+    // Filter courses
+    let majorCode = student.major.code;
+    let filters = courseFilterByMajor[majorCode];
+
+    filters.forEach(codeList =>
+    {
+        codeList.forEach(code =>
+        {
+            if (courseCardMap.get(code) !== undefined)
+            {
+                let list = [''];
+                list.slice()
+            }
+        });
+    });
+
+
+    for (const courseCardMapElement of courseCardMap)
+    {
+        let card = courseCardMapElement[1];
+
+        let id = `${card.isDistCourse ? 'dist' : 'main'}-${card.state.icon}`
+
+        document.getElementById(id).appendChild(card);
+    }
 }
 
-// <div id="course-card-template" className="course-card">
-//     <div className="course-icon" style="background-color: green">
-//         <span className="material-icons">done</span>
-//     </div>
-//     <div>
-//         <div th:text="${course.getCode()}" className="course-code"></div>
-//         <div th:text="${course.getTitle()}" className="course-name"></div>
-//     </div>
-//     <span th:text="${course.getCreditCount()}" className="course-credit"></span>
-// </div>
+const courseFilterByMajor = {
+    '120-2019': [
+        ['GEPE3010', 'GEPE3020', 'GEPE3030'],
+        ['GEHS3020', 'GEHS3050', 'GEHS4020', 'GEHS4030']
+    ]
+}

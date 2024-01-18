@@ -24,14 +24,8 @@ public class StudentService
         return studentRepository.findById(id);
     }
 
-//    public List<Course> getApprovedCoursesInMajor(String id) throws Exception
+//    public List<Course> getApprovedCoursesInMajor(Student student)
 //    {
-//        // TODO: configure get courses from student so searching by student ID in database is case insensitive
-//
-//        if (findStudentById(id).isEmpty())
-//            throw new Exception("Student was not found");
-//
-//        Student student = findStudentById(id).get();
 //        Major major = student.getMajor();
 //
 //        List<Course> approvedCourses = student.getApprovedCourses();

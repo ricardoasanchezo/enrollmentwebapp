@@ -24,4 +24,5 @@ public class Student
 
     @ManyToMany(targetEntity = Course.class)
     private List<Course> approvedCourses;
+
 }
